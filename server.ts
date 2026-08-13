@@ -423,7 +423,7 @@ async function startServer() {
           return 'test_user_123';
         }
         try {
-          const apiKey = process.env.FIREBASE_API_KEY || "AIzaSyBJcb4HxB5lk9RpUIlUpIkcxo9hx2IEBWg";
+          const apiKey = process.env.FIREBASE_API_KEY || "";
           const resp = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

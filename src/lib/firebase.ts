@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Krishna Web OS Firebase Configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyBJcb4HxB5lk9RpUIlUpIkcxo9hx2IEBWg",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
   authDomain: "krishna-web-os.firebaseapp.com",
   projectId: "krishna-web-os",
   storageBucket: "krishna-web-os.firebasestorage.app",

@@ -48,3 +48,38 @@ KrishnaOS is organized into three independent areas:
 
 The frontend Vite dev server automatically proxies `/api/*` calls to the backend on `http://localhost:3000`.
 
+---
+
+## Automated Testing & QA Reporting
+
+Krishna Website includes a full-stack automated quality testing pipeline that validates Static Types, Frontend, Backend APIs, E2E Journeys, Security, and Production Builds.
+
+### Local Test Commands
+
+```bash
+# Run linting & type checks
+npm run lint
+npm run typecheck
+
+# Run unit & integration tests
+npm run test:unit
+npm run test:integration
+
+# Run E2E tests
+npm run test:e2e
+
+# Run complete QA test suite & generate HTML dashboard
+npm run qa:report
+```
+
+### Test Artifacts & Dashboard
+
+Executing `npm run qa:report` generates:
+- **Interactive HTML QA Dashboard**: `test-results/index.html` and `reports/index.html`
+- **Machine-Readable JSON Results**: `test-results/test-results.json` and `reports/test-results.json`
+
+### GitHub Actions CI/CD Integration
+
+Every push or pull request targeting `main` automatically triggers `.github/workflows/ci-tests.yml`, which executes all tests, publishes `$GITHUB_STEP_SUMMARY`, and uploads the `krishna-website-test-report` artifact.
+
+

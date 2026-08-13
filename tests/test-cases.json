@@ -1,0 +1,4003 @@
+[
+  {
+    "testId": "test-cases-1",
+    "title": "Home page loads correctly",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/'",
+      "Wait for home banner to be visible"
+    ],
+    "expected": "Home banner is displayed"
+  },
+  {
+    "testId": "test-cases-2",
+    "title": "Voice Assistant opens",
+    "type": "ui",
+    "steps": [
+      "Click on 'Voice Assistant' button",
+      "Wait for modal to appear"
+    ],
+    "expected": "Voice Assistant modal is visible"
+  },
+  {
+    "testId": "test-cases-3",
+    "title": "Reset password flow",
+    "type": "functional",
+    "steps": [
+      "Navigate to '/reset-password'",
+      "Enter email and submit",
+      "Check for confirmation message"
+    ],
+    "expected": "Confirmation email sent message appears"
+  },
+  {
+    "testId": "synthetic-4",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-5",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-6",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-7",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-8",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-9",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-10",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-11",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-12",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-13",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-14",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-15",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-16",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-17",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-18",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-19",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-20",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-21",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-22",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-23",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-24",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-25",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-26",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-27",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-28",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-29",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-30",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-31",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-32",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-33",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-34",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-35",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-36",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-37",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-38",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-39",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-40",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-41",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-42",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-43",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-44",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-45",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-46",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-47",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-48",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-49",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-50",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-51",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-52",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-53",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-54",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-55",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-56",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-57",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-58",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-59",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-60",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-61",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-62",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-63",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-64",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-65",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-66",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-67",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-68",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-69",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-70",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-71",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-72",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-73",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-74",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-75",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-76",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-77",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-78",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-79",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-80",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-81",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-82",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-83",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-84",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-85",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-86",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-87",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-88",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-89",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-90",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-91",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-92",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-93",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-94",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-95",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-96",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-97",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-98",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-99",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-100",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-101",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-102",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-103",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-104",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-105",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-106",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-107",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-108",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-109",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-110",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-111",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-112",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-113",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-114",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-115",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-116",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-117",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-118",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-119",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-120",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-121",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-122",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-123",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-124",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-125",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-126",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-127",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-128",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-129",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-130",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-131",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-132",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-133",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-134",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-135",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-136",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-137",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-138",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-139",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-140",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-141",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-142",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-143",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-144",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-145",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-146",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-147",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-148",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-149",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-150",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-151",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-152",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-153",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-154",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-155",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-156",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-157",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-158",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-159",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-160",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-161",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-162",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-163",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-164",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-165",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-166",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-167",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-168",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-169",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-170",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-171",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-172",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-173",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-174",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-175",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-176",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-177",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-178",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-179",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-180",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-181",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-182",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-183",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-184",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-185",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-186",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-187",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-188",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-189",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-190",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-191",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-192",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-193",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-194",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-195",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-196",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-197",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-198",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-199",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-200",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-201",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-202",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-203",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-204",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-205",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-206",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-207",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-208",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-209",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-210",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-211",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-212",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-213",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-214",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-215",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-216",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-217",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-218",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-219",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-220",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-221",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-222",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-223",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-224",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-225",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-226",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-227",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-228",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-229",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-230",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-231",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-232",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-233",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-234",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-235",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-236",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-237",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-238",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-239",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-240",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-241",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-242",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-243",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-244",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-245",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-246",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-247",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-248",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-249",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-250",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-251",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-252",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-253",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-254",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-255",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-256",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-257",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-258",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-259",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-260",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-261",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-262",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-263",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-264",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-265",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-266",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-267",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-268",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-269",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-270",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-271",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-272",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-273",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-274",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-275",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-276",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-277",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-278",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-279",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-280",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-281",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-282",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-283",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-284",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-285",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-286",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-287",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-288",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-289",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-290",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-291",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-292",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-293",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-294",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-295",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-296",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-297",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-298",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-299",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-300",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-301",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-302",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-303",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-304",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-305",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-306",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-307",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-308",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-309",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-310",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-311",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-312",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-313",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-314",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-315",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-316",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-317",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-318",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-319",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-320",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-321",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-322",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-323",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-324",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-325",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-326",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-327",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-328",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-329",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-330",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-331",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-332",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-333",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-334",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-335",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-336",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-337",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-338",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-339",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-340",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-341",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-342",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-343",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-344",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-345",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-346",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-347",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-348",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-349",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-350",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-351",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-352",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-353",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-354",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-355",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-356",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-357",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-358",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-359",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-360",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-361",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-362",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-363",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-364",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-365",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-366",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-367",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-368",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-369",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-370",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-371",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-372",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-373",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-374",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-375",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-376",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-377",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-378",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-379",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-380",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-381",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-382",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-383",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-384",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-385",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-386",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  },
+  {
+    "testId": "synthetic-387",
+    "title": "Load KrishnaLearn page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnalearn'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaLearn page is displayed"
+  },
+  {
+    "testId": "synthetic-388",
+    "title": "Load KrishnaVision page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnavision'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaVision page is displayed"
+  },
+  {
+    "testId": "synthetic-389",
+    "title": "Load Login page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/login'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Login page is displayed"
+  },
+  {
+    "testId": "synthetic-390",
+    "title": "Load NeuralCanvas page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/neuralcanvas'",
+      "Wait for page to be visible"
+    ],
+    "expected": "NeuralCanvas page is displayed"
+  },
+  {
+    "testId": "synthetic-391",
+    "title": "Load Register page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/register'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Register page is displayed"
+  },
+  {
+    "testId": "synthetic-392",
+    "title": "Load ResetPassword page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/resetpassword'",
+      "Wait for page to be visible"
+    ],
+    "expected": "ResetPassword page is displayed"
+  },
+  {
+    "testId": "synthetic-393",
+    "title": "Load UlosUniversalLife page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/ulosuniversallife'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UlosUniversalLife page is displayed"
+  },
+  {
+    "testId": "synthetic-394",
+    "title": "Load UserProfile page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/userprofile'",
+      "Wait for page to be visible"
+    ],
+    "expected": "UserProfile page is displayed"
+  },
+  {
+    "testId": "synthetic-395",
+    "title": "Load VoiceAssistant page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/voiceassistant'",
+      "Wait for page to be visible"
+    ],
+    "expected": "VoiceAssistant page is displayed"
+  },
+  {
+    "testId": "synthetic-396",
+    "title": "Load AiCore page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/aicore'",
+      "Wait for page to be visible"
+    ],
+    "expected": "AiCore page is displayed"
+  },
+  {
+    "testId": "synthetic-397",
+    "title": "Load Dashboard page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/dashboard'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Dashboard page is displayed"
+  },
+  {
+    "testId": "synthetic-398",
+    "title": "Load Home page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/home'",
+      "Wait for page to be visible"
+    ],
+    "expected": "Home page is displayed"
+  },
+  {
+    "testId": "synthetic-399",
+    "title": "Load KrishnaAgent page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaagent'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaAgent page is displayed"
+  },
+  {
+    "testId": "synthetic-400",
+    "title": "Load KrishnaGuardian page and verify content",
+    "type": "ui",
+    "steps": [
+      "Navigate to '/krishnaguardian'",
+      "Wait for page to be visible"
+    ],
+    "expected": "KrishnaGuardian page is displayed"
+  }
+]

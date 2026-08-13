@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "./styles/auth.css";
 
-@theme {
+:root {
   --color-krishna-bg: #02040A;
   --color-krishna-surface: rgba(255, 255, 255, 0.05);
   --color-krishna-cyan: #00E5FF;
