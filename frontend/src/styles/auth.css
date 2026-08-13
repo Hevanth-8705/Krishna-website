@@ -1,0 +1,201 @@
+/* Auth page design system – premium Krishna theme */
+
+:root {
+  --color-bg-deep: #050816; /* deep midnight */
+  --color-bg-nav: #0B1026; /* dark navy */
+  --color-cyan: #5CE1E6;
+  --color-violet: #8B7CFF;
+  --color-gold: #D6B56A;
+  --color-white: #F5F7FF;
+  --color-surface: rgba(255, 255, 255, 0.07);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-input-bg: rgba(255, 255, 255, 0.04);
+  --color-input-border: rgba(255, 255, 255, 0.15);
+}
+
+/* Global background layers for auth pages */
+.auth-bg {
+  background: var(--color-bg-deep);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.auth-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 229, 255, 0.12) 0%,
+    rgba(124, 58, 237, 0.08) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Glass‑morphism card */
+.auth-card {
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  color: var(--color-white);
+}
+
+.auth-card h1 {
+  font-family: var(--font-sans);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: var(--color-cyan);
+}
+
+.auth-card p.subtitle {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-white);
+}
+
+/* Input wrapper with focus glow */
+.auth-input {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.auth-input input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 8px;
+  color: var(--color-white);
+  font-size: 0.95rem;
+}
+
+.auth-input input:focus {
+  outline: none;
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 3px rgba(92, 225, 230, 0.15);
+}
+
+.auth-input .icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-violet);
+  pointer-events: none;
+}
+
+/* Password toggle eye */
+.auth-input .toggle-visibility {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-violet);
+}
+
+/* Primary button */
+.auth-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, var(--color-cyan), var(--color-violet));
+  border: none;
+  border-radius: 8px;
+  color: var(--color-white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 229, 255, 0.25);
+}
+
+.auth-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Google button (transparent) */
+.auth-button.google {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-button.google:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Links */
+.auth-link {
+  color: var(--color-cyan);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Password strength bar */
+.password-strength {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-input-bg);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.password-strength .fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.password-strength .weak { background: #ff3b3b; }
+.password-strength .medium { background: #ffb800; }
+.password-strength .strong { background: #00ff9d; }
+
+/* Error / Success toast */
+.auth-toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  max-width: 300px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: var(--color-white);
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-toast.error { background: #ff3b3b; }
+.auth-toast.success { background: #00ff9d; }
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

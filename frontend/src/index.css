@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "./styles/auth.css";
+
+@theme {
+  --color-krishna-bg: #02040A;
+  --color-krishna-surface: rgba(255, 255, 255, 0.05);
+  --color-krishna-cyan: #00E5FF;
+  --color-krishna-cyan-glow: rgba(0, 229, 255, 0.3);
+  --color-krishna-green: #00FF9D;
+  --color-krishna-red: #FF3B3B;
+
+  --font-sans: "Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background-color: var(--color-krishna-bg);
+  color: white;
+}
+
+/* Cyber-Light Theme (Inverted Deep Space) */
+body.cyber-light {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+body.cyber-light img,
+body.cyber-light video {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: var(--color-krishna-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+/* Zen Mode Rules */
+.zen-mode-active .glass-panel h2 {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+.zen-mode-active .glass-panel > div > h3,
+.zen-mode-active .glass-panel > div > div > h3 {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+/* Specific to NeuralSoundscape where h2 is grouped with Disc icon */
+.zen-mode-active .glass-panel .animate-spin-slow.text-gray-400 {
+  display: none !important;
+}
+
+/* Keep justify-between working as usual by just keeping the layout but making elements invisible/squished */
+
+.neural-glow {
+  box-shadow: 0 0 20px var(--color-krishna-cyan-glow);
+}
+
+.neural-glow-green {
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-krishna-cyan);
+}
+
+@keyframes charging-pulse-glow {
+  0% {
+    stroke-width: 2.2px;
+    opacity: 0.65;
+    filter: drop-shadow(0 0 2px rgba(0, 255, 157, 0.5));
+  }
+  50% {
+    stroke-width: 3.8px;
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.95)) drop-shadow(0 0 14px rgba(0, 255, 157, 0.4));
+  }
+  100% {
+    stroke-width: 2.2px;
+    opacity: 0.65;
+    filter: drop-shadow(0 0 2px rgba(0, 255, 157, 0.5));
+  }
+}
+
+.animate-charging-pulse {
+  animation: charging-pulse-glow 1.8s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes panel-charging-pulse-glow {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
+    border-color: rgba(0, 255, 157, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 157, 0.4);
+    border-color: rgba(0, 255, 157, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
+    border-color: rgba(0, 255, 157, 0.2);
+  }
+}
+
+.animate-panel-charging-pulse {
+  animation: panel-charging-pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes grid-cell-alert {
+  0% {
+    stroke: rgba(239, 68, 68, 0.4);
+    stroke-width: 1.5px;
+    fill-opacity: 0.75;
+  }
+  50% {
+    stroke: rgba(239, 68, 68, 1);
+    stroke-width: 2.5px;
+    fill-opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8));
+  }
+  100% {
+    stroke: rgba(239, 68, 68, 0.4);
+    stroke-width: 1.5px;
+    fill-opacity: 0.75;
+  }
+}
+
+.animate-grid-cell-alert {
+  animation: grid-cell-alert 1.6s infinite ease-in-out;
+}
+
+@keyframes container-clap-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0));
+  }
+  30% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 45px rgba(0, 255, 157, 0.85));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0));
+  }
+}
+
+.animate-container-clap-pulse {
+  animation: container-clap-pulse 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes habit-celebration {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(0, 255, 157, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 157, 0);
+  }
+}
+
+.animate-habit-celebration {
+  animation: habit-celebration 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes container-clap-pulse-intense {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0));
+  }
+  30% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 60px rgba(0, 255, 157, 1)) brightness(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0));
+  }
+}
+
+.animate-container-clap-pulse-intense {
+  animation: container-clap-pulse-intense 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+

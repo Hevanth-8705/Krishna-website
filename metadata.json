@@ -1,0 +1,6 @@
+{
+  "name": "KRISHNA WEB OS",
+  "description": "A futuristic AI Operating System, Neural Assistant, and Voice Environment.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
