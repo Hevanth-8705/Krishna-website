@@ -23,6 +23,7 @@
     "qa:test": "node scripts/runValidationTests.cjs",
     "qa:excel": "node scripts/generateExcelReport.cjs",
     "qa:html": "node scripts/generateHtmlReport.cjs",
+    "qa:ci": "npm run typecheck && npm run build && npm run qa:report",
     "qa:report": "node scripts/runValidationTests.cjs && node scripts/generateHtmlReport.cjs && node scripts/generateExcelReport.cjs"
   },
   "dependencies": {
@@ -62,8 +63,6 @@
     "webdriverio": "^8.0.0"
   },
   "devDependencies": {
-    "@esbuild/win32-x64": "^0.28.2",
-    "@rollup/rollup-win32-x64-msvc": "^4.62.4",
     "@types/express": "^4.17.21",
     "@types/jest": "^30.0.0",
     "@types/jszip": "^3.4.0",

@@ -1,83 +1,536 @@
-// generateTestCatalog.js
-// This script produces a JSON catalog with **400 distinct test case entries**.
-// It merges any YAML definitions and fills the remainder with synthetic UI cases.
+// scripts/generateTestCatalog.cjs
+// Generates the comprehensive 450+ test catalog for Krishna Website QA Pipeline.
+// Maps every test to real Krishna features across 10 distinct categories.
+
 const fs = require('fs');
 const path = require('path');
-const yaml = require('js-yaml');
 
-// Directory that may contain user‑written YAML test definitions.
-const INPUT_DIR = path.resolve(__dirname, '..', 'nodejsBaseline', 'tests', 'e2e');
-// Output catalog consumed by the test orchestration script.
 const OUTPUT_FILE = path.resolve(__dirname, '..', 'tests', 'test-cases.json');
 
-/**
- * Load any existing YAML test case files.
- * Returns an array of case objects.
- */
-function loadYamlFiles() {
-  const cases = [];
-  if (!fs.existsSync(INPUT_DIR)) {
-    console.warn(`Input directory ${INPUT_DIR} does not exist. No YAML test cases to load.`);
-    return cases;
-  }
-  const files = fs.readdirSync(INPUT_DIR).filter(f => f.endsWith('.yaml') || f.endsWith('.yml'));
-  files.forEach(file => {
-    const content = yaml.load(fs.readFileSync(path.join(INPUT_DIR, file), 'utf8'));
-    if (Array.isArray(content)) {
-      content.forEach((c, idx) => {
-        cases.push({
-          testId: `${path.basename(file, path.extname(file))}-${idx + 1}`,
-          title: c.title ?? null,
-          type: c.type ?? null,
-          steps: c.steps ?? [],
-          expected: c.expected ?? null,
-        });
-      });
-    }
+const testCases = [];
+
+function addCase(id, title, category, type, module, steps, expected) {
+  testCases.push({
+    testId: id,
+    title,
+    category,
+    type,
+    module,
+    steps,
+    expected
   });
-  return cases;
 }
 
-/**
- * Generate synthetic UI test cases until we have 400 entries.
- * Uses page components from `src/pages` to craft simple navigation checks.
- */
-function generateSyntheticCases(existingCount) {
-  const target = 400;
-  const synthetic = [];
-  const pagesDir = path.resolve(__dirname, '..', 'src', 'pages');
-  const pageFiles = fs.existsSync(pagesDir) ? fs.readdirSync(pagesDir).filter(f => f.endsWith('.tsx') || f.endsWith('.jsx')) : [];
-  let idx = existingCount + 1;
-  while (synthetic.length + existingCount < target) {
-    const pageFile = pageFiles[(synthetic.length) % pageFiles.length] || `unknown${synthetic.length}`;
-    const pageName = path.basename(pageFile, path.extname(pageFile));
-    synthetic.push({
-      testId: `synthetic-${idx}`,
-      title: `Load ${pageName} page and verify content`,
-      type: 'ui',
-      steps: [
-        `Navigate to '/${pageName.toLowerCase()}'`,
-        'Wait for page to be visible',
-      ],
-      expected: `${pageName} page is displayed`,
-    });
-    idx++;
-  }
-  return synthetic;
+// ─────────────────────────────────────────────────────────────
+// 1. AUTHENTICATION & SECURITY (TC-AUTH-001 to TC-AUTH-050)
+// ─────────────────────────────────────────────────────────────
+const authTests = [
+  ["TC-AUTH-001", "Firebase Auth initialization in client", "Auth", "functional", "Firebase", ["Import firebase config", "Verify getAuth() is initialized"], "Auth instance is created"],
+  ["TC-AUTH-002", "Login with valid email and password format", "Auth", "functional", "Login", ["Navigate to /login", "Enter email and password", "Click Sign In"], "Redirects to dashboard"],
+  ["TC-AUTH-003", "Login rejection on invalid email format", "Auth", "functional", "Login", ["Navigate to /login", "Enter 'invalidemail'", "Click Sign In"], "Displays validation error"],
+  ["TC-AUTH-004", "Login rejection on empty password", "Auth", "functional", "Login", ["Navigate to /login", "Enter email without password", "Click Sign In"], "Displays password required error"],
+  ["TC-AUTH-005", "Registration with valid user credentials", "Auth", "functional", "Register", ["Navigate to /register", "Enter name, email, password", "Submit"], "Account created and session starts"],
+  ["TC-AUTH-006", "Registration rejection on password mismatch", "Auth", "functional", "Register", ["Enter password and mismatched confirmation", "Submit"], "Shows passwords do not match error"],
+  ["TC-AUTH-007", "Registration password minimum length enforcement", "Auth", "functional", "Register", ["Enter 4-character password", "Submit"], "Enforces minimum 6 characters"],
+  ["TC-AUTH-008", "Forgot password endpoint email validation", "Auth", "api", "Forgot Password", ["POST /api/auth/forgot-password with invalid email"], "Returns 400 with validation message"],
+  ["TC-AUTH-009", "Forgot password rate limiting protection", "Auth", "security", "Forgot Password", ["POST /api/auth/forgot-password 10 times consecutively"], "Returns 429 Too Many Requests"],
+  ["TC-AUTH-010", "Forgot password email enumeration resistance", "Auth", "security", "Forgot Password", ["POST /api/auth/forgot-password with non-existent email"], "Returns generic success message"],
+  ["TC-AUTH-011", "SMTP diagnostic endpoint returns connection status", "Auth", "api", "SMTP Service", ["GET /api/auth/smtp-status"], "Returns 200 with SMTP diagnostic info"],
+  ["TC-AUTH-012", "Password reset token generation and cryptographic entropy", "Auth", "unit", "Auth Mailer", ["Invoke token generator", "Check byte length"], "Generates 64-char hex token with high entropy"],
+  ["TC-AUTH-013", "Password reset token verification endpoint", "Auth", "api", "Forgot Password", ["POST /api/auth/verify-reset-token with invalid token"], "Returns 400 token invalid or expired"],
+  ["TC-AUTH-014", "Password reset completion with valid token", "Auth", "api", "Forgot Password", ["POST /api/auth/reset-password with token & new pass"], "Updates password and invalidates token"],
+  ["TC-AUTH-015", "Email verification token dispatch", "Auth", "api", "Email Verification", ["POST /api/auth/send-verification"], "Sends verification link to user email"],
+  ["TC-AUTH-016", "Email verification token validation", "Auth", "api", "Email Verification", ["GET /api/auth/verify-email?token=xxx"], "Verifies user email status"],
+  ["TC-AUTH-017", "Google OAuth sign-in integration check", "Auth", "functional", "Google Auth", ["Trigger GoogleAuthProvider popup flow"], "Handles OAuth credentials response"],
+  ["TC-AUTH-018", "User session persistence in localStorage / cookie", "Auth", "functional", "Session Service", ["Authenticate user", "Reload browser tab"], "Restores active user session"],
+  ["TC-AUTH-019", "User logout state clearance", "Auth", "functional", "Logout", ["Click Logout button", "Check auth store"], "Clears tokens and redirects to /login"],
+  ["TC-AUTH-020", "Protected route navigation guard for unauthenticated users", "Auth", "functional", "Protected Route", ["Navigate to /dashboard while unauthenticated"], "Redirects to /login"],
+  ["TC-AUTH-021", "Protected route pass-through for authenticated users", "Auth", "functional", "Protected Route", ["Navigate to /dashboard with active session"], "Renders Dashboard component"],
+  ["TC-AUTH-022", "Biometric Lock modal presentation", "Auth", "ui", "Biometric Lock", ["Trigger biometric challenge modal"], "Renders fingerprint/face unlock UI"],
+  ["TC-AUTH-023", "Biometric Lock success unlock workflow", "Auth", "functional", "Biometric Lock", ["Submit valid biometric simulation pin"], "Unlocks protected dashboard"],
+  ["TC-AUTH-024", "User profile view loading with user details", "Auth", "ui", "User Profile", ["Navigate to /userprofile"], "Displays avatar, email, join date, settings"],
+  ["TC-AUTH-025", "User profile display name update", "Auth", "functional", "User Profile", ["Update display name in profile form", "Save"], "Persists updated profile information"],
+  ["TC-AUTH-026", "User profile password change workflow", "Auth", "functional", "User Profile", ["Enter current & new password in profile settings"], "Updates account password securely"],
+  ["TC-AUTH-027", "AuthContext provider wraps application tree", "Auth", "unit", "AuthContext", ["Mount AuthProvider in test harness"], "Provides currentUser & auth methods"],
+  ["TC-AUTH-028", "Auth error normalization prevents [object Object]", "Auth", "unit", "Error Utils", ["Pass raw auth error object to normalizeApiError"], "Returns clean human-readable message"],
+  ["TC-AUTH-029", "Session timeout and automatic expiration handler", "Auth", "functional", "Session Service", ["Fast-forward clock past session TTL"], "Triggers session expiration alert"],
+  ["TC-AUTH-030", "Multi-tab authentication sync via storage listener", "Auth", "functional", "Session Service", ["Log out in Tab 1", "Verify Tab 2"], "Tab 2 synchronizes logout state"],
+  ["TC-AUTH-031", "XSS payload sanitization in login email input", "Auth", "security", "Login", ["Enter '<script>alert(1)</script>' in email"], "Sanitized without executing script"],
+  ["TC-AUTH-032", "SQL/NoSQL injection prevention in auth fields", "Auth", "security", "Login", ["Enter '{\"$gt\": \"\"}' in auth credentials"], "Rejected cleanly with 400 Bad Request"],
+  ["TC-AUTH-033", "Password strength meter visual indicators", "Auth", "ui", "Register", ["Type weak, medium, and strong passwords"], "Indicator changes from red to yellow to green"],
+  ["TC-AUTH-034", "Remember Me checkbox state retention", "Auth", "ui", "Login", ["Toggle Remember Me", "Inspect storage preference"], "Persists local persistence flag"],
+  ["TC-AUTH-035", "Forgot password modal cancel & close interaction", "Auth", "ui", "Forgot Password", ["Open forgot pass modal", "Click Close"], "Modal unmounts cleanly"],
+  ["TC-AUTH-036", "Terms of Service and Privacy Policy link check", "Auth", "ui", "Register", ["Click Terms link on registration page"], "Opens modal or navigates to terms view"],
+  ["TC-AUTH-037", "Auth loading spinner during async requests", "Auth", "ui", "Login", ["Submit login form", "Observe submit button"], "Displays animated loading spinner"],
+  ["TC-AUTH-038", "SmtpDiagnosticPanel component rendering", "Auth", "ui", "Admin Diagnostics", ["Render SmtpDiagnosticPanel in admin view"], "Shows host, port, TLS, and ping time"],
+  ["TC-AUTH-039", "SMTP ping test trigger and result display", "Auth", "functional", "Admin Diagnostics", ["Click 'Test SMTP Connection' button"], "Fetches and displays live SMTP health"],
+  ["TC-AUTH-040", "Password reset expiration after token TTL", "Auth", "security", "Forgot Password", ["Attempt reset with expired timestamp token"], "Returns 400 Token has expired"],
+  ["TC-AUTH-041", "Auth token exclusion from browser URL parameters", "Auth", "security", "Auth", ["Inspect redirect URLs after login"], "No sensitive auth tokens exposed in query params"],
+  ["TC-AUTH-042", "Concurrent login session limit handling", "Auth", "functional", "Session Service", ["Simulate concurrent logins from different IPs"], "Maintains valid active sessions safely"],
+  ["TC-AUTH-043", "User avatar fallback on broken image URL", "Auth", "ui", "User Profile", ["Provide 404 image url for user photo"], "Renders user initial letter avatar"],
+  ["TC-AUTH-044", "Form auto-complete attribute compliance", "Auth", "ui", "Login", ["Inspect email & password input attributes"], "Has autocomplete='email' and 'current-password'"],
+  ["TC-AUTH-045", "Auth form keyboard submission on Enter key", "Auth", "ui", "Login", ["Press Enter inside password input"], "Triggers form onSubmit handler"],
+  ["TC-AUTH-046", "Email verification banner on unverified account", "Auth", "ui", "Dashboard", ["Login with unverified email account"], "Displays verification reminder banner"],
+  ["TC-AUTH-047", "Resend verification email rate limit check", "Auth", "security", "Email Verification", ["Click 'Resend Verification' multiple times"], "Enforces 60-second cooldown timer"],
+  ["TC-AUTH-048", "Auth service mock fallback in disconnected state", "Auth", "functional", "Auth Service", ["Simulate network failure during auth initialization"], "Enters safe offline fallback mode"],
+  ["TC-AUTH-049", "Password visibility toggle button interaction", "Auth", "ui", "Login", ["Click eye icon next to password input"], "Toggles input type between password and text"],
+  ["TC-AUTH-050", "Clear sensitive credentials from memory on unmount", "Auth", "security", "Login", ["Unmount Login component after failed attempt"], "Component state memory freed cleanly"],
+];
+
+authTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 2. KRISHNA AI CORE & CHAT (TC-CORE-001 to TC-CORE-050)
+// ─────────────────────────────────────────────────────────────
+const coreTests = [
+  ["TC-CORE-001", "AI Core page layout and header rendering", "AiCore", "ui", "AiCore View", ["Navigate to /aicore", "Inspect main container"], "Renders title, status pill, and chat interface"],
+  ["TC-CORE-002", "Chat message submission via input field", "AiCore", "functional", "Chat Input", ["Type 'Hello Krishna' in chat input", "Press Send"], "Message appears in chat stream"],
+  ["TC-CORE-003", "Chat streaming response reception from /api/chat", "AiCore", "api", "Chat API", ["POST /api/chat with test prompt", "Read stream"], "Server returns text/event-stream chunks"],
+  ["TC-CORE-004", "Groq API key environment variable validation", "AiCore", "unit", "Server Config", ["Check process.env.GROQ_API_KEY handler"], "Safely reads key or handles missing fallback"],
+  ["TC-CORE-005", "Groq model selection configuration (Llama 3.3)", "AiCore", "unit", "Server Config", ["Check getGroqModel() default"], "Returns 'llama-3.3-70b-versatile'"],
+  ["TC-CORE-006", "Message array normalization for Groq API format", "AiCore", "unit", "Server Chat", ["Pass parts/system/user messages to normalizeGroqMessages"], "Converts to clean role/content objects"],
+  ["TC-CORE-007", "System instruction injection into chat prompt", "AiCore", "unit", "Server Chat", ["Pass systemInstruction param", "Inspect output"], "System message placed at index 0"],
+  ["TC-CORE-008", "Chat history auto-scroll on new incoming message", "AiCore", "ui", "Chat Stream", ["Send multi-line prompt", "Receive long answer"], "Chat container scrolls to bottom"],
+  ["TC-CORE-009", "TypewriterText animation effect on AI output", "AiCore", "ui", "TypewriterText", ["Mount TypewriterText with text string"], "Characters stream in smoothly with cursor"],
+  ["TC-CORE-010", "MatrixRain canvas animation visual rendering", "AiCore", "ui", "MatrixRain", ["Mount MatrixRain component", "Check canvas context"], "Canvas renders green falling glyphs"],
+  ["TC-CORE-011", "SystemHealthVisualizer metric gauges rendering", "AiCore", "ui", "System Health", ["Mount SystemHealthVisualizer"], "Displays CPU, RAM, and latency bars"],
+  ["TC-CORE-012", "NeuralSoundscape audio ambient synth controls", "AiCore", "ui", "Soundscape", ["Toggle play soundscape", "Adjust volume"], "Audio synthesizer initializes frequencies"],
+  ["TC-CORE-013", "KrishnaBrainBot floating interactive assistant", "AiCore", "ui", "BrainBot", ["Click floating BrainBot icon", "Check modal"], "Opens quick chat bubble with prompt suggestions"],
+  ["TC-CORE-014", "Command palette global shortcut (Ctrl+K / Cmd+K)", "AiCore", "ui", "Command Palette", ["Press Ctrl+K on keyboard"], "Opens command search palette modal"],
+  ["TC-CORE-015", "Command palette navigation to specific feature", "AiCore", "functional", "Command Palette", ["Search 'Vision' in Command Palette", "Press Enter"], "Navigates to /krishnavision"],
+  ["TC-CORE-016", "Quick actions panel buttons trigger predefined prompts", "AiCore", "ui", "Quick Actions", ["Click 'Analyze Code' action button"], "Populates chat input with prompt template"],
+  ["TC-CORE-017", "Chat clear conversation history workflow", "AiCore", "functional", "Chat Stream", ["Click 'Clear Chat' button in toolbar"], "Clears message list and resets context"],
+  ["TC-CORE-018", "Chat export conversation to JSON / text", "AiCore", "functional", "Chat Stream", ["Click 'Export Chat' button"], "Downloads chat transcript file"],
+  ["TC-CORE-019", "Voice speech synthesis output toggle", "AiCore", "functional", "Voice Assistant", ["Toggle TTS speaker icon in chat"], "Reads incoming AI message via Web Speech API"],
+  ["TC-CORE-020", "Voice speech recognition input handler", "AiCore", "functional", "Voice Assistant", ["Click microphone button", "Simulate speech"], "Transcribes audio and inputs into chat box"],
+  ["TC-CORE-021", "Markdown formatting rendering in AI messages", "AiCore", "ui", "Chat Stream", ["Receive markdown code block in response"], "Renders syntax highlighted code block with copy button"],
+  ["TC-CORE-022", "Code block one-click copy to clipboard", "AiCore", "ui", "Chat Stream", ["Click 'Copy' button on code block"], "Copies code to clipboard and shows 'Copied!'"],
+  ["TC-CORE-023", "Chat prompt token limit and truncation guard", "AiCore", "unit", "Chat Store", ["Input 10,000 word prompt", "Check payload"], "Trims safely to fit model context window"],
+  ["TC-CORE-024", "AI response timeout and retry prompt", "AiCore", "functional", "Chat API", ["Simulate API timeout (>30s)"], "Displays 'Request timed out. Retry?' button"],
+  ["TC-CORE-025", "Temperature and creativity slider adjustments", "AiCore", "ui", "Chat Settings", ["Slide temperature from 0.2 to 0.9"], "Updates temperature parameter in next request"],
+  ["TC-CORE-026", "Dark / Neon / Cyberpunk theme switcher in AI Core", "AiCore", "ui", "Theme Context", ["Switch theme to Neon"], "Applies neon glow and dark background classes"],
+  ["TC-CORE-027", "Voice command router pattern matching", "AiCore", "unit", "Voice Router", ["Pass 'open settings' to voiceCommandRouter"], "Resolves to SETTINGS route action"],
+  ["TC-CORE-028", "Voice command router parameter extraction", "AiCore", "unit", "Voice Router", ["Pass 'search quantum physics' to voiceCommandRouter"], "Extracts query 'quantum physics'"],
+  ["TC-CORE-029", "Clap detection audio hook initialization", "AiCore", "unit", "Clap Detection", ["Invoke useClapDetection hook"], "Listens for threshold peak in microphone input"],
+  ["TC-CORE-030", "FluteHero interactive synthesizer mini-game", "AiCore", "ui", "FluteHero", ["Mount FluteHero component", "Press musical notes"], "Plays frequency notes with visualizer"],
+  ["TC-CORE-031", "Daily affirmations randomizer widget", "AiCore", "ui", "Daily Affirmations", ["Mount DailyAffirmations component"], "Renders inspiring affirmation quote with author"],
+  ["TC-CORE-032", "DailySystemSummary diagnostic dashboard", "AiCore", "ui", "System Summary", ["Mount DailySystemSummary component"], "Renders system uptime, tasks completed, score"],
+  ["TC-CORE-033", "ProductivityInsights visual metrics breakdown", "AiCore", "ui", "Productivity", ["Mount ProductivityInsights component"], "Renders focus time chart and goal completion"],
+  ["TC-CORE-034", "Mouse gesture controller event binding", "AiCore", "unit", "Mouse Gestures", ["Mount MouseGestureController", "Simulate swipe"], "Triggers directional navigation action"],
+  ["TC-CORE-035", "NeuralDefender threat detection panel", "AiCore", "ui", "NeuralDefender", ["Mount NeuralDefender component"], "Displays active firewall rules and security score"],
+  ["TC-CORE-036", "NeuralHabits habit tracker streak management", "AiCore", "ui", "NeuralHabits", ["Mark habit as completed for today"], "Increments habit streak count in storage"],
+  ["TC-CORE-037", "OSUpdateManager version check simulation", "AiCore", "ui", "OS Update", ["Click 'Check for Updates' in update panel"], "Queries latest version tag and shows update status"],
+  ["TC-CORE-038", "QuickTaskModal fast task entry workflow", "AiCore", "ui", "Quick Task", ["Open QuickTaskModal", "Enter task", "Submit"], "Adds new item to agent task backlog"],
+  ["TC-CORE-039", "VoiceStatusWidget microphone level meter", "AiCore", "ui", "Voice Status", ["Mount VoiceStatusWidget", "Simulate audio db"], "Canvas visualizes audio wave amplitude"],
+  ["TC-CORE-040", "Chat input character counter and validation", "AiCore", "ui", "Chat Input", ["Type characters in chat input"], "Displays active character count indicator"],
+  ["TC-CORE-041", "Chat message deletion individual action", "AiCore", "functional", "Chat Stream", ["Hover over message", "Click Delete"], "Removes message from active conversation"],
+  ["TC-CORE-042", "Chat message edit and regenerate workflow", "AiCore", "functional", "Chat Stream", ["Edit previous user prompt", "Resubmit"], "Re-triggers AI response from edited point"],
+  ["TC-CORE-043", "AI emotion and sentiment detection parser", "AiCore", "unit", "Server Chat", ["Parse JSON emotion header from response"], "Extracts emotion tag (happy, analytical, focused)"],
+  ["TC-CORE-044", "Emotion-based avatar visual animation feedback", "AiCore", "ui", "BrainBot", ["Receive 'excited' emotion in AI message"], "Avatar pulses with energetic color animation"],
+  ["TC-CORE-045", "API key masked display in admin settings", "AiCore", "security", "Admin Settings", ["Inspect API key input in settings"], "Renders as '••••••••••••••••'"],
+  ["TC-CORE-046", "Offline network alert in AI Core", "AiCore", "ui", "Network Alert", ["Trigger window 'offline' event"], "Displays banner 'Neural Core running in offline mode'"],
+  ["TC-CORE-047", "Chat session export to PDF document", "AiCore", "functional", "Export Service", ["Click 'Export PDF'", "Verify jsPDF call"], "Generates formatted PDF report of chat"],
+  ["TC-CORE-048", "Prompt template library category filtering", "AiCore", "ui", "Prompt Library", ["Filter templates by 'Coding'"], "Displays coding specific prompt cards"],
+  ["TC-CORE-049", "Multi-turn conversation context retention", "AiCore", "functional", "Chat Store", ["Send Question 1, then follow-up Question 2"], "Passes prior conversation turns in context"],
+  ["TC-CORE-050", "Graceful fallback when AI quota is exhausted", "AiCore", "functional", "Chat API", ["Simulate 429 quota error from upstream"], "Displays friendly 'Provider busy, switching model' notice"],
+];
+
+coreTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 3. KRISHNA VISION INTELLIGENCE (TC-VIS-001 to TC-VIS-045)
+// ─────────────────────────────────────────────────────────────
+const visionTests = [
+  ["TC-VIS-001", "Krishna Vision page view rendering", "Vision", "ui", "Vision View", ["Navigate to /krishnavision"], "Renders drop zone, mode selector, and result panel"],
+  ["TC-VIS-002", "Image drag-and-drop file upload handler", "Vision", "ui", "Drop Zone", ["Drag test.png onto drop zone"], "Reads image and displays thumbnail preview"],
+  ["TC-VIS-003", "Image file input selection via file dialog", "Vision", "ui", "File Input", ["Select image file via input[type=file]"], "Parses file to data URL base64"],
+  ["TC-VIS-004", "Vision mode selector: UNDERSTAND analysis mode", "Vision", "ui", "Vision Modes", ["Select 'UNDERSTAND' mode in dropdown"], "Sets prompt template for general understanding"],
+  ["TC-VIS-005", "Vision mode selector: OCR text extraction mode", "Vision", "ui", "Vision Modes", ["Select 'OCR' mode"], "Configures prompt for verbatim text extraction"],
+  ["TC-VIS-006", "Vision mode selector: OBJECT_DETECTION mode", "Vision", "ui", "Vision Modes", ["Select 'OBJECT_DETECTION' mode"], "Configures prompt for object bounding analysis"],
+  ["TC-VIS-007", "Vision mode selector: CODE_ANALYSIS mode", "Vision", "ui", "Vision Modes", ["Select 'CODE_ANALYSIS' mode"], "Configures prompt for UI-to-code extraction"],
+  ["TC-VIS-008", "Vision mode selector: MATH_SOLVER mode", "Vision", "ui", "Vision Modes", ["Select 'MATH_SOLVER' mode"], "Configures prompt for equation solving with steps"],
+  ["TC-VIS-009", "Vision mode selector: MEDICAL_SCAN mode", "Vision", "ui", "Vision Modes", ["Select 'MEDICAL_SCAN' mode"], "Configures prompt with medical disclaimer banner"],
+  ["TC-VIS-010", "Vision API endpoint payload validation (no image)", "Vision", "api", "Vision API", ["POST /api/vision/analyze without imageBase64"], "Returns 400 'At least one valid image is required'"],
+  ["TC-VIS-011", "Vision API image format validation (unsupported format)", "Vision", "api", "Vision API", ["POST /api/vision/analyze with data:text/plain;base64"], "Returns 400 'Unsupported image format'"],
+  ["TC-VIS-012", "Vision API payload size limit enforcement (>10MB)", "Vision", "security", "Vision API", ["POST /api/vision/analyze with 15MB base64"], "Returns 413 'Payload Too Large'"],
+  ["TC-VIS-013", "Vision API invalid mode rejection", "Vision", "api", "Vision API", ["POST /api/vision/analyze with mode='INVALID'"], "Returns 400 'Invalid vision mode'"],
+  ["TC-VIS-014", "Vision anti-hallucination prompt rule injection", "Vision", "unit", "Vision Server", ["Inspect fullSystemPrompt in server.ts"], "Includes strict hallucination safeguards"],
+  ["TC-VIS-015", "Groq vision model fallback (Qwen 3.6 to fallback)", "Vision", "unit", "Vision Server", ["Check getGroqVisionModel() defaults"], "Configures qwen/qwen3.6-27b with fallbacks"],
+  ["TC-VIS-016", "Vision analysis loading skeleton state", "Vision", "ui", "Vision View", ["Submit image for analysis", "Observe result panel"], "Displays animated neural scanning placeholder"],
+  ["TC-VIS-017", "Vision analysis formatted text result rendering", "Vision", "ui", "Vision View", ["Receive analysis result", "Check markdown"], "Renders structured analysis with headers and tags"],
+  ["TC-VIS-018", "Vision OCR copy extracted text action", "Vision", "ui", "Vision View", ["Click 'Copy Text' on OCR result"], "Copies extracted text to clipboard"],
+  ["TC-VIS-019", "Vision multi-image batch upload handler", "Vision", "functional", "Vision View", ["Upload 3 comparison images simultaneously"], "Creates carousel preview for all 3 images"],
+  ["TC-VIS-020", "Vision image zoom and pan inspect modal", "Vision", "ui", "Vision View", ["Click on uploaded image thumbnail"], "Opens high-resolution lightbox viewer"],
+  ["TC-VIS-021", "Vision analysis history persistence in local store", "Vision", "functional", "Vision Store", ["Complete vision scan", "Reload page"], "Displays recent vision scan cards in history"],
+  ["TC-VIS-022", "Vision analysis clear image and reset state", "Vision", "ui", "Vision View", ["Click 'Clear Image' button"], "Resets file input and preview container"],
+  ["TC-VIS-023", "Vision camera capture webcam stream integration", "Vision", "functional", "Webcam Capture", ["Click 'Take Photo' button", "Grant permission"], "Captures frame from video element to canvas data URL"],
+  ["TC-VIS-024", "Vision camera permission denial graceful error", "Vision", "ui", "Webcam Capture", ["Deny camera permission in browser"], "Displays 'Camera access denied. Please upload an image.'"],
+  ["TC-VIS-025", "Vision image aspect ratio preservation in preview", "Vision", "ui", "Vision View", ["Upload wide 16:9 image"], "Maintains aspect ratio without distortion"],
+  ["TC-VIS-026", "Vision image rotation action (90 degree clockwise)", "Vision", "functional", "Vision View", ["Click 'Rotate' button on preview"], "Rotates image canvas by 90 degrees"],
+  ["TC-VIS-027", "Vision image crop box interactive adjustment", "Vision", "ui", "Vision View", ["Adjust crop handles on image"], "Updates bounding box coordinates for crop"],
+  ["TC-VIS-028", "Vision custom user prompt attachment to scan", "Vision", "functional", "Vision View", ["Enter 'What color is the car?' with image"], "Sends custom prompt along with vision mode"],
+  ["TC-VIS-029", "Vision download analysis report as PDF/Image", "Vision", "functional", "Vision Export", ["Click 'Download Report'"], "Generates comprehensive PDF with image and analysis"],
+  ["TC-VIS-030", "Vision token usage and latency metric display", "Vision", "ui", "Vision View", ["Complete scan", "Inspect footer stats"], "Displays execution time (ms) and tokens used"],
+  ["TC-VIS-031", "Vision unsupported SVG file rejection", "Vision", "security", "Drop Zone", ["Drop SVG file containing XML"], "Rejects SVG to prevent SVG-based XSS"],
+  ["TC-VIS-032", "Vision corrupted image binary error handling", "Vision", "functional", "Vision API", ["Submit broken base64 payload"], "Catches error and displays invalid image alert"],
+  ["TC-VIS-033", "Vision barcode / QR code recognition workflow", "Vision", "functional", "Vision Modes", ["Upload QR code image in OCR mode"], "Decodes QR URL and provides clickable link"],
+  ["TC-VIS-034", "Vision color palette extraction helper", "Vision", "unit", "Vision Utils", ["Pass canvas context to color extractor"], "Extracts dominant RGB/HEX color swatches"],
+  ["TC-VIS-035", "Vision contrast and brightness adjustment sliders", "Vision", "ui", "Vision View", ["Adjust brightness slider +20%"], "Applies CSS filter to preview canvas"],
+  ["TC-VIS-036", "Vision share analysis result link generator", "Vision", "functional", "Vision Share", ["Click 'Share Result' button"], "Generates shareable snapshot link"],
+  ["TC-VIS-037", "Vision comparison mode side-by-side view", "Vision", "ui", "Vision View", ["Select 2 images for comparison"], "Renders side-by-side diff comparison layout"],
+  ["TC-VIS-038", "Vision audio narration of image description", "Vision", "functional", "Vision Audio", ["Click 'Read Aloud' on vision analysis"], "Speaks visual description using Web Speech API"],
+  ["TC-VIS-039", "Vision keyboard shortcut navigation (Ctrl+V paste)", "Vision", "ui", "Vision View", ["Press Ctrl+V with image on clipboard"], "Pastes clipboard image directly into scan zone"],
+  ["TC-VIS-040", "Vision sample images gallery one-click load", "Vision", "ui", "Vision View", ["Click sample image thumbnail"], "Loads preset image into scan zone immediately"],
+  ["TC-VIS-041", "Vision watermark removal or preservation", "Vision", "ui", "Vision View", ["Inspect exported image canvas"], "Preserves original resolution without watermark"],
+  ["TC-VIS-042", "Vision prompt suggestions pills for image type", "Vision", "ui", "Vision View", ["Upload receipt image"], "Suggests 'Extract total', 'List items' pills"],
+  ["TC-VIS-043", "Vision response language translation selector", "Vision", "functional", "Vision View", ["Select output language: Spanish"], "Appends translation instruction to system prompt"],
+  ["TC-VIS-044", "Vision dark mode high contrast image border", "Vision", "ui", "Vision View", ["Toggle dark mode"], "Applies glowing border to image canvas container"],
+  ["TC-VIS-045", "Vision cache hit for duplicate image hash", "Vision", "functional", "Vision Store", ["Analyze same image twice in session"], "Returns cached result instantly"],
+];
+
+visionTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 4. KRISHNA LEARN & EDUCATION (TC-LRN-001 to TC-LRN-045)
+// ─────────────────────────────────────────────────────────────
+const learnTests = [
+  ["TC-LRN-001", "Krishna Learn page view rendering", "Learn", "ui", "Learn View", ["Navigate to /krishnalearn"], "Renders course categories, progress bars, and paths"],
+  ["TC-LRN-002", "Learn store courses catalog loading", "Learn", "unit", "Learn Store", ["Inspect learnStore.courses array in server/learnStore.ts"], "Contains structured courses with modules"],
+  ["TC-LRN-003", "Course selection and module list expansion", "Learn", "ui", "Course Card", ["Click 'Quantum Computing' course card"], "Expands module accordion with lesson list"],
+  ["TC-LRN-004", "Lesson content markdown viewer and code blocks", "Learn", "ui", "Lesson View", ["Click 'Introduction to Qubits' lesson"], "Renders lesson text, diagrams, and code snippets"],
+  ["TC-LRN-005", "Interactive quiz submission and score calculation", "Learn", "functional", "Quiz Module", ["Answer 5 quiz questions", "Click Submit"], "Calculates score % and reveals explanation answers"],
+  ["TC-LRN-006", "Passing score triggers module completion badge", "Learn", "functional", "Quiz Module", ["Score >= 80% on quiz"], "Marks module completed with gold checkmark"],
+  ["TC-LRN-007", "Failing score triggers retry recommendation", "Learn", "functional", "Quiz Module", ["Score < 80% on quiz"], "Shows 'Review Lesson & Retry' button"],
+  ["TC-LRN-008", "Course progress percentage computation", "Learn", "unit", "Learn Store", ["Complete 2 of 4 lessons in course"], "Calculates course progress as exactly 50%"],
+  ["TC-LRN-009", "Course completion certificate generation", "Learn", "functional", "Certificate", ["Complete all modules in course", "Click Certificate"], "Generates personalized PDF certificate with user name"],
+  ["TC-LRN-010", "Study focus timer start / pause / reset controls", "Learn", "ui", "Study Timer", ["Start 25-min Pomodoro timer"], "Countdown begins with audio chime on completion"],
+  ["TC-LRN-011", "Course search filter by keyword", "Learn", "functional", "Course Filter", ["Type 'Neural' in course search bar"], "Filters course list to neural network courses"],
+  ["TC-LRN-012", "Course filter by difficulty level (Beginner/Advanced)", "Learn", "ui", "Course Filter", ["Select 'Beginner' badge"], "Displays only beginner friendly courses"],
+  ["TC-LRN-013", "Lesson bookmarking for quick access", "Learn", "functional", "Bookmarks", ["Click bookmark ribbon on lesson"], "Adds lesson to 'Saved Bookmarks' sidebar"],
+  ["TC-LRN-014", "Interactive code sandbox execution simulation", "Learn", "functional", "Code Sandbox", ["Edit Python snippet in lesson", "Click Run"], "Simulates output in terminal emulator widget"],
+  ["TC-LRN-015", "Flashcard flip interactive study mode", "Learn", "ui", "Flashcards", ["Click on term flashcard"], "Animates 3D card flip showing definition"],
+  ["TC-LRN-016", "Daily learning streak counter increment", "Learn", "functional", "Streak Tracker", ["Complete at least 1 lesson today"], "Increments user consecutive learning streak"],
+  ["TC-LRN-017", "Video lesson embed player integration", "Learn", "ui", "Video Player", ["Open lesson with video attachment"], "Renders responsive video player iframe"],
+  ["TC-LRN-018", "Lesson notes user textarea auto-save", "Learn", "functional", "Notes", ["Type personal notes in lesson drawer"], "Auto-saves notes to localStorage on blur"],
+  ["TC-LRN-019", "Course outline print view formatting", "Learn", "ui", "Course View", ["Trigger print stylesheet (window.print)"], "Hides navigation and optimizes for printer"],
+  ["TC-LRN-020", "Glossary term tooltip hover definition", "Learn", "ui", "Lesson View", ["Hover over highlighted technical term"], "Displays floating tooltip with concise definition"],
+  ["TC-LRN-021", "Audio narration of lesson text", "Learn", "functional", "Text to Speech", ["Click 'Listen to Lesson' audio icon"], "Synthesizes speech of lesson paragraphs"],
+  ["TC-LRN-022", "Course rating and review submission", "Learn", "ui", "Reviews", ["Select 5 stars", "Enter review comment", "Submit"], "Displays user review under course overview"],
+  ["TC-LRN-023", "Course prerequisite dependency validation", "Learn", "functional", "Course Path", ["Attempt advanced course before intro"], "Shows prerequisite warning banner"],
+  ["TC-LRN-024", "Recommended courses based on user interests", "Learn", "functional", "Recommendations", ["Select 'AI Ethics' topic in onboarding"], "Highlights ethics courses on learn homepage"],
+  ["TC-LRN-025", "Offline course content caching in service worker", "Learn", "functional", "Offline Cache", ["Save course for offline", "Disconnect internet"], "Loads cached lesson text and images"],
+  ["TC-LRN-026", "Interactive quiz timer countdown per question", "Learn", "ui", "Quiz Module", ["Start timed quiz challenge"], "60s countdown timer ticks with warning color"],
+  ["TC-LRN-027", "Quiz hint button reveals contextual clue", "Learn", "ui", "Quiz Module", ["Click 'Need a Hint?' button"], "Reveals clue text without deducting points"],
+  ["TC-LRN-028", "Formula rendering with MathJax / LaTeX syntax", "Learn", "ui", "Lesson View", ["Open quantum equation lesson"], "Renders mathematical symbols cleanly"],
+  ["TC-LRN-029", "Download lesson materials as Markdown file", "Learn", "functional", "Lesson Export", ["Click 'Download Markdown'"], "Downloads clean .md file of lesson content"],
+  ["TC-LRN-030", "Leaderboard user rank and XP calculation", "Learn", "ui", "Gamification", ["Earn 500 XP from lessons"], "Updates user leaderboard tier and rank"],
+  ["TC-LRN-031", "Badge unlocking modal animation on milestone", "Learn", "ui", "Gamification", ["Complete first 5 lessons"], "Pops up animated celebration modal with badge"],
+  ["TC-LRN-032", "Dark mode high-readability font sizing in lessons", "Learn", "ui", "Theme", ["Increase font size toggle in lesson toolbar"], "Scales paragraph typography smoothly"],
+  ["TC-LRN-033", "Table of contents sticky sidebar highlighting", "Learn", "ui", "Lesson View", ["Scroll through long lesson content"], "Active section link updates in sticky sidebar"],
+  ["TC-LRN-034", "Next / Previous lesson navigation buttons", "Learn", "functional", "Lesson View", ["Click 'Next Lesson' button at bottom"], "Loads subsequent lesson in sequence"],
+  ["TC-LRN-035", "Course enrollment toggle and my courses list", "Learn", "functional", "Enrollment", ["Click 'Enroll in Course'"], "Adds course to user's active learning dashboard"],
+  ["TC-LRN-036", "Interactive diagram SVG click hotspot details", "Learn", "ui", "Diagrams", ["Click node in architecture SVG"], "Opens detailed node description drawer"],
+  ["TC-LRN-037", "Code syntax highlighting theme synchronization", "Learn", "ui", "Code Viewer", ["Switch app theme to Dark"], "Updates Prism/Highlight.js syntax theme"],
+  ["TC-LRN-038", "Copy lesson deep link to clipboard", "Learn", "functional", "Sharing", ["Click 'Copy Lesson Link'"], "Copies URL with anchor #lesson-id"],
+  ["TC-LRN-039", "Discussion forum / comment section thread reply", "Learn", "ui", "Discussions", ["Post question under lesson"], "Appends question to discussion list"],
+  ["TC-LRN-040", "Instructor profile modal biography and credentials", "Learn", "ui", "Instructor", ["Click instructor avatar"], "Opens instructor credential modal"],
+  ["TC-LRN-041", "Course duration estimate calculation check", "Learn", "unit", "Learn Store", ["Sum all lesson durations in course"], "Displays accurate total hours/minutes estimate"],
+  ["TC-LRN-042", "Reset course progress confirmation modal", "Learn", "functional", "Course Settings", ["Click 'Reset Progress'", "Confirm"], "Clears completed flags for course"],
+  ["TC-LRN-043", "Live preview split view in coding tutorials", "Learn", "ui", "Coding View", ["Type HTML in sandbox editor"], "Renders live preview in iframe panel"],
+  ["TC-LRN-044", "Keyboard shortcuts for quiz navigation (1, 2, 3, 4)", "Learn", "ui", "Quiz Module", ["Press key '2' on keyboard during quiz"], "Selects option B automatically"],
+  ["TC-LRN-045", "Course certificate verification QR code link", "Learn", "functional", "Certificate", ["Scan QR code on certificate PDF"], "Opens certificate verification URL"],
+];
+
+learnTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 5. KRISHNA AUTONOMOUS AGENT (TC-AGT-001 to TC-AGT-045)
+// ─────────────────────────────────────────────────────────────
+const agentTests = [
+  ["TC-AGT-001", "Krishna Agent page layout and task generator", "Agent", "ui", "Agent View", ["Navigate to /krishnaagent"], "Renders goal input, tools toggle, and task board"],
+  ["TC-AGT-002", "Agent goal input submission and task creation", "Agent", "functional", "Agent Task", ["Enter 'Audit website performance'", "Click Deploy Agent"], "Creates task with unique taskId"],
+  ["TC-AGT-003", "Tool registry catalog endpoint (/api/agent/tools)", "Agent", "api", "Tool Registry", ["GET /api/agent/tools"], "Returns 200 with list of active tools & risk levels"],
+  ["TC-AGT-004", "Tool registry tool lookup by name helper", "Agent", "unit", "Tool Registry", ["Invoke getToolByName('web_search')"], "Returns tool configuration object"],
+  ["TC-AGT-005", "Tool registry active tools filter helper", "Agent", "unit", "Tool Registry", ["Invoke getActiveTools()"], "Returns only tools with status: 'active'"],
+  ["TC-AGT-006", "Tool input validation against JSON schema", "Agent", "unit", "Tool Registry", ["Validate input for 'calculate' tool"], "Returns true for valid inputs, false for invalid"],
+  ["TC-AGT-007", "Agent high-risk tool confirmation workflow", "Agent", "functional", "Agent Safety", ["Agent plans tool with requiresConfirmation: true"], "Sets task status to 'WAITING_FOR_USER'"],
+  ["TC-AGT-008", "Agent task confirmation endpoint (/confirm = true)", "Agent", "api", "Agent Task", ["POST /api/agent/tasks/:id/confirm with { confirmed: true }"], "Sets status to CONFIRMED and proceeds"],
+  ["TC-AGT-009", "Agent task cancellation endpoint (/confirm = false)", "Agent", "api", "Agent Task", ["POST /api/agent/tasks/:id/confirm with { confirmed: false }"], "Cancels task and stops execution"],
+  ["TC-AGT-010", "Agent task cancel route (/api/agent/tasks/:id/cancel)", "Agent", "api", "Agent Task", ["POST /api/agent/tasks/:id/cancel on running task"], "Sets status to CANCELLED cleanly"],
+  ["TC-AGT-011", "Agent task status polling endpoint (/api/agent/tasks/:id)", "Agent", "api", "Agent Task", ["GET /api/agent/tasks/:id"], "Returns current step, progress, and audit logs"],
+  ["TC-AGT-012", "Agent task audit log recording and traceability", "Agent", "unit", "Agent Store", ["Execute step in task"], "Logs timestamp, tool, user, and outcome"],
+  ["TC-AGT-013", "Agent final summary generation on completion", "Agent", "functional", "Agent Core", ["Complete all task steps"], "Sets status: 'COMPLETED' and produces finalSummary"],
+  ["TC-AGT-014", "Agent step progress bar visualization", "Agent", "ui", "Agent View", ["Watch task execution"], "Progress bar animates from 0% to 100%"],
+  ["TC-AGT-015", "Agent tool output collapsible log viewer", "Agent", "ui", "Agent View", ["Click on executed step log"], "Expands tool input params and raw JSON output"],
+  ["TC-AGT-016", "Agent task export to Markdown report", "Agent", "functional", "Agent Export", ["Click 'Export Execution Log'"], "Downloads .md report with steps and results"],
+  ["TC-AGT-017", "Agent tool execution timeout safeguard (30s)", "Agent", "security", "Agent Safety", ["Simulate tool hanging indefinitely"], "Aborts tool step after 30s with error status"],
+  ["TC-AGT-018", "Agent non-existent tool handling fallback", "Agent", "functional", "Agent Core", ["Plan step with unknown tool name"], "Marks step skipped and logs error gracefully"],
+  ["TC-AGT-019", "Agent retry failed step capability", "Agent", "functional", "Agent View", ["Click 'Retry Step' on failed tool action"], "Re-executes step with refreshed context"],
+  ["TC-AGT-020", "Agent max iteration depth limiter (10 steps max)", "Agent", "security", "Agent Safety", ["Input open-ended infinite loop goal"], "Caps plan execution at max 10 steps"],
+  ["TC-AGT-021", "Agent concurrent task execution guard", "Agent", "functional", "Agent Core", ["Trigger 2 tasks simultaneously"], "Queues second task or executes concurrently in sandbox"],
+  ["TC-AGT-022", "Agent task history persistence in Zustand store", "Agent", "unit", "Agent Store", ["Create 3 tasks in session"], "Maintains task history list in agent store"],
+  ["TC-AGT-023", "Agent clear completed tasks action", "Agent", "ui", "Agent View", ["Click 'Clear Completed' button"], "Purges completed task items from active board"],
+  ["TC-AGT-024", "Agent goal template selection pills", "Agent", "ui", "Agent View", ["Click 'Security Audit' goal pill"], "Fills goal input with structured audit prompt"],
+  ["TC-AGT-025", "Agent sound notification chime on completion", "Agent", "functional", "Agent Audio", ["Task transitions to COMPLETED"], "Plays subtle success audio chime"],
+  ["TC-AGT-026", "Agent human-in-the-loop modal dialog styling", "Agent", "ui", "Agent Safety", ["Trigger confirmation request modal"], "Shows danger badge, tool description, params diff"],
+  ["TC-AGT-027", "Agent system resource usage telemetry indicator", "Agent", "ui", "Agent View", ["Inspect agent execution monitor"], "Displays simulated memory and CPU metrics"],
+  ["TC-AGT-028", "Agent tool permission toggles in settings", "Agent", "ui", "Agent Settings", ["Toggle off 'file_system' tool in settings"], "Disables tool from agent planning capability"],
+  ["TC-AGT-029", "Agent plan dependency graph DAG rendering", "Agent", "ui", "Agent View", ["Generate 4-step plan"], "Renders step sequence with connector arrows"],
+  ["TC-AGT-030", "Agent error recovery recommendation display", "Agent", "ui", "Agent View", ["Tool fails due to 404 resource"], "Suggests alternative query or manual intervention"],
+  ["TC-AGT-031", "Agent batch task CSV import handler", "Agent", "functional", "Agent Batch", ["Upload CSV with 5 goals"], "Creates queued backlog of 5 independent tasks"],
+  ["TC-AGT-032", "Agent live execution duration timer (ms)", "Agent", "ui", "Agent View", ["Start task execution"], "Displays live ticking duration counter"],
+  ["TC-AGT-033", "Agent auto-scroll execution log console", "Agent", "ui", "Agent View", ["Observe multi-step logs in console"], "Auto-scrolls terminal output box to latest log"],
+  ["TC-AGT-034", "Agent dark mode glowing status badges", "Agent", "ui", "Agent View", ["Inspect RUNNING, WAITING, COMPLETED badges"], "Displays pulse animated color status badges"],
+  ["TC-AGT-035", "Agent rate limiting on task creation endpoint", "Agent", "security", "Agent API", ["Trigger 20 tasks in 5 seconds"], "Enforces rate limit and returns 429 response"],
+  ["TC-AGT-036", "Agent plan JSON schema validation", "Agent", "unit", "Agent Core", ["Validate LLM output plan structure"], "Ensures steps array contains id, toolName, description"],
+  ["TC-AGT-037", "Agent task priority queue sorting", "Agent", "functional", "Agent Store", ["Create Urgent vs Normal priority tasks"], "Executes high priority tasks first in queue"],
+  ["TC-AGT-038", "Agent copy task summary to clipboard", "Agent", "ui", "Agent View", ["Click 'Copy Summary' button"], "Copies finalSummary text cleanly to clipboard"],
+  ["TC-AGT-039", "Agent filter tasks by status (Completed/Failed)", "Agent", "ui", "Agent View", ["Select 'Failed' filter tab"], "Displays only failed task cards"],
+  ["TC-AGT-040", "Agent webhook notification on task finish", "Agent", "api", "Agent Webhook", ["Configure webhook URL in agent settings"], "Dispatches POST payload on task completion"],
+  ["TC-AGT-041", "Agent sanitized tool parameter printing in logs", "Agent", "security", "Agent Safety", ["Tool executed with apiKey param"], "Masks sensitive parameters in audit log view"],
+  ["TC-AGT-042", "Agent execution speed throttle setting (Slow/Fast)", "Agent", "ui", "Agent Settings", ["Change speed to 'Slow (Demonstration)'"], "Inserts delay between tool execution steps"],
+  ["TC-AGT-043", "Agent re-run entire task with same goal", "Agent", "functional", "Agent View", ["Click 'Re-run Task' on completed item"], "Spawns new execution run with identical prompt"],
+  ["TC-AGT-044", "Agent keyboard shortcut (Ctrl+Enter to Deploy)", "Agent", "ui", "Agent View", ["Press Ctrl+Enter in goal textarea"], "Deploys agent without clicking button"],
+  ["TC-AGT-045", "Agent empty goal submission validation", "Agent", "ui", "Agent View", ["Click 'Deploy Agent' with empty input"], "Shows 'Please enter a goal for Krishna Agent'"],
+];
+
+agentTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 6. IMAGE STUDIO & NEURAL CANVAS (TC-CANV-001 to TC-CANV-040)
+// ─────────────────────────────────────────────────────────────
+const canvasTests = [
+  ["TC-CANV-001", "Neural Canvas page layout rendering", "Canvas", "ui", "Canvas View", ["Navigate to /neuralcanvas"], "Renders toolbar, 2D/3D viewport, and layer panel"],
+  ["TC-CANV-002", "Three.js 3D canvas viewport initialization", "Canvas", "ui", "ThreeJS", ["Mount Three.js Canvas container"], "Initializes WebGL renderer and scene graph"],
+  ["TC-CANV-003", "2D drawing canvas mouse down / draw interaction", "Canvas", "functional", "2D Canvas", ["Click and drag mouse across canvas"], "Draws stroke with selected color and brush size"],
+  ["TC-CANV-004", "Brush color picker selection and state update", "Canvas", "ui", "Toolbar", ["Select purple color in color swatch"], "Updates active drawing stroke color"],
+  ["TC-CANV-005", "Brush size slider adjustment (1px to 50px)", "Canvas", "ui", "Toolbar", ["Slide brush size from 5px to 25px"], "Updates stroke line width on canvas context"],
+  ["TC-CANV-006", "Canvas clear action with confirmation modal", "Canvas", "functional", "Toolbar", ["Click 'Clear Canvas'", "Confirm"], "Wipes canvas back to transparent background"],
+  ["TC-CANV-007", "Canvas undo / redo history stack management", "Canvas", "functional", "History Stack", ["Draw 3 strokes", "Click Undo twice", "Click Redo"], "Restores canvas snapshot state accurately"],
+  ["TC-CANV-008", "Canvas export to PNG image download", "Canvas", "functional", "Export", ["Click 'Export PNG'"], "Triggers download of high-res image.png file"],
+  ["TC-CANV-009", "Canvas export to JPEG format with quality slider", "Canvas", "functional", "Export", ["Select JPEG at 90% quality", "Export"], "Produces JPEG blob and initiates download"],
+  ["TC-CANV-010", "Canvas export to WebP compressed format", "Canvas", "functional", "Export", ["Select WebP export"], "Produces modern WebP compressed asset"],
+  ["TC-CANV-011", "AI prompt-to-image generator input form", "Canvas", "ui", "AI Studio", ["Enter prompt 'Cyberpunk cityscape'", "Generate"], "Displays generation progress spinner"],
+  ["TC-CANV-012", "AI generated image placement onto canvas layer", "Canvas", "functional", "AI Studio", ["Receive generated image blob"], "Renders image as draggable layer on canvas"],
+  ["TC-CANV-013", "Layer management: Add new transparent layer", "Canvas", "functional", "Layer Panel", ["Click 'Add Layer'"], "Creates Layer 2 and sets as active drawing target"],
+  ["TC-CANV-014", "Layer management: Toggle layer visibility", "Canvas", "ui", "Layer Panel", ["Click eye icon on Layer 1"], "Hides Layer 1 without deleting stroke data"],
+  ["TC-CANV-015", "Layer management: Delete layer action", "Canvas", "functional", "Layer Panel", ["Select Layer 2", "Click Delete Layer"], "Removes layer from composition stack"],
+  ["TC-CANV-016", "Layer management: Layer opacity slider (0% to 100%)", "Canvas", "ui", "Layer Panel", ["Adjust Layer 1 opacity to 50%"], "Renders layer with 0.5 alpha transparency"],
+  ["TC-CANV-017", "Shape tool: Draw rectangle on canvas", "Canvas", "functional", "Shape Tools", ["Select Rectangle tool", "Drag on canvas"], "Draws clean vector aligned rectangle"],
+  ["TC-CANV-018", "Shape tool: Draw circle / ellipse on canvas", "Canvas", "functional", "Shape Tools", ["Select Circle tool", "Drag on canvas"], "Draws smooth anti-aliased circle"],
+  ["TC-CANV-019", "Shape tool: Draw line with arrow endpoint", "Canvas", "functional", "Shape Tools", ["Select Arrow tool", "Drag line"], "Renders line with directional arrowhead"],
+  ["TC-CANV-020", "Text tool: Insert editable text box on canvas", "Canvas", "functional", "Text Tool", ["Click canvas with Text tool", "Type 'Krishna AI'"], "Renders typography overlay on canvas"],
+  ["TC-CANV-021", "Eraser tool: Erase drawing strokes cleanly", "Canvas", "functional", "Toolbar", ["Select Eraser tool", "Drag over drawn strokes"], "Clears pixel data to transparent background"],
+  ["TC-CANV-022", "Color eyedropper tool picks color from pixel", "Canvas", "functional", "Toolbar", ["Click eyedropper tool on canvas pixel"], "Sets picked pixel color as active brush color"],
+  ["TC-CANV-023", "Fill bucket tool flood fill algorithm", "Canvas", "functional", "Toolbar", ["Click inside closed boundary with Fill tool"], "Fills contiguous pixel region with color"],
+  ["TC-CANV-024", "Zoom in / Zoom out canvas viewport controls", "Canvas", "ui", "Viewport", ["Click Zoom + button (150%)"], "Scales canvas transform smoothly with CSS"],
+  ["TC-CANV-025", "Pan canvas viewport with Spacebar + drag", "Canvas", "functional", "Viewport", ["Hold Spacebar and drag canvas"], "Translates viewport coordinate offset"],
+  ["TC-CANV-026", "Preset background template selection (Grid, Dots, Dark)", "Canvas", "ui", "Templates", ["Select 'Isometric Grid' background"], "Renders isometric grid guideline overlay"],
+  ["TC-CANV-027", "Canvas resolution resize settings (1080p / 4K)", "Canvas", "functional", "Canvas Settings", ["Change canvas size to 1920x1080"], "Resizes internal canvas buffer and re-renders"],
+  ["TC-CANV-028", "Import external image to canvas as layer", "Canvas", "functional", "Import", ["Upload photo from desktop"], "Adds photo to active layer centered on canvas"],
+  ["TC-CANV-029", "Filter effects: Blur and Contrast adjustments", "Canvas", "functional", "Filters", ["Apply Gaussian blur filter (5px)"], "Processes canvas pixel data through convolution filter"],
+  ["TC-CANV-030", "Filter effects: Invert colors / Grayscale", "Canvas", "functional", "Filters", ["Apply Grayscale filter"], "Converts RGB pixel buffer to luminance values"],
+  ["TC-CANV-031", "Keyboard shortcuts for tools (B=Brush, E=Eraser, Z=Undo)", "Canvas", "ui", "Keyboard", ["Press 'B' key on keyboard"], "Selects Brush tool automatically"],
+  ["TC-CANV-032", "Save canvas project to browser IndexedDB", "Canvas", "functional", "Storage", ["Click 'Save Project'"], "Saves layered canvas project file locally"],
+  ["TC-CANV-033", "Load saved canvas project from storage", "Canvas", "functional", "Storage", ["Open project from 'Recent Projects' list"], "Restores all layers, strokes, and history"],
+  ["TC-CANV-034", "Touch pressure sensitivity simulation on tablet", "Canvas", "functional", "Stylus Support", ["Simulate PointerEvent with pressure=0.8"], "Varies stroke width dynamically with pressure"],
+  ["TC-CANV-035", "Symmetry drawing mode (Mirror vertical / horizontal)", "Canvas", "functional", "Symmetry", ["Enable vertical mirror mode", "Draw left side"], "Mirrors stroke simultaneously on right side"],
+  ["TC-CANV-036", "3D mesh object rotation in ThreeJS viewport", "Canvas", "ui", "ThreeJS", ["Click and orbit 3D wireframe mesh"], "Updates 3D camera Euler angles smoothly"],
+  ["TC-CANV-037", "Lighting preset toggle in 3D studio (Studio, Cyber, Sun)", "Canvas", "ui", "ThreeJS", ["Select 'Cyber Neon' lighting preset"], "Adjusts ambient, directional, and point light colors"],
+  ["TC-CANV-038", "Performance FPS counter in canvas viewport", "Canvas", "ui", "Performance", ["Observe render loop FPS meter"], "Maintains stable 60 FPS during drawing strokes"],
+  ["TC-CANV-039", "Export SVG vector path data", "Canvas", "functional", "Export", ["Click 'Export SVG' on vector shapes"], "Produces XML SVG document with vector paths"],
+  ["TC-CANV-040", "Full screen canvas mode toggle (F11 / Button)", "Canvas", "ui", "Toolbar", ["Click 'Full Screen' button"], "Maximizes viewport and hides browser chrome"],
+];
+
+canvasTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 7. DASHBOARD & SYSTEM MONITORING (TC-DASH-001 to TC-DASH-040)
+// ─────────────────────────────────────────────────────────────
+const dashTests = [
+  ["TC-DASH-001", "Dashboard main view layout and header metrics", "Dashboard", "ui", "Dashboard", ["Navigate to /dashboard"], "Renders system cards, quick actions, analytics"],
+  ["TC-DASH-002", "Live system uptime counter display", "Dashboard", "ui", "Telemetry", ["Inspect uptime counter badge"], "Displays running uptime in HH:MM:SS format"],
+  ["TC-DASH-003", "System memory RAM gauge visual update", "Dashboard", "ui", "Telemetry", ["Inspect memory bar in dashboard"], "Renders simulated RAM % usage bar"],
+  ["TC-DASH-004", "Active AI model status card indicator", "Dashboard", "ui", "Model Status", ["Check active model pill"], "Shows 'Groq Llama 3.3 70B' with green online dot"],
+  ["TC-DASH-005", "Quick navigation cards to all Krishna modules", "Dashboard", "ui", "Navigation", ["Click 'Vision' quick navigation card"], "Navigates to /krishnavision seamlessly"],
+  ["TC-DASH-006", "Recent user activity log feed display", "Dashboard", "ui", "Activity Feed", ["Inspect activity feed list"], "Renders timestamps and actions in chronological order"],
+  ["TC-DASH-007", "Recharts visual analytics weekly usage chart", "Dashboard", "ui", "Analytics", ["Inspect Recharts bar/line chart"], "Renders responsive SVG chart with tooltips"],
+  ["TC-DASH-008", "Theme selector dropdown (Dark, Neon, Midnight)", "Dashboard", "ui", "Settings", ["Change theme dropdown to Midnight"], "Updates body theme CSS classes"],
+  ["TC-DASH-009", "Notification center drawer open and close", "Dashboard", "ui", "Notifications", ["Click bell icon in header"], "Slides open notification panel with recent alerts"],
+  ["TC-DASH-010", "Notification badge count indicator", "Dashboard", "ui", "Notifications", ["Trigger 3 unread system alerts"], "Displays red '3' badge on notification icon"],
+  ["TC-DASH-011", "Mark all notifications as read action", "Dashboard", "functional", "Notifications", ["Click 'Mark all as read'"], "Clears unread badge count to zero"],
+  ["TC-DASH-012", "Admin diagnostic panel authorization check", "Dashboard", "security", "Admin Panel", ["Inspect AdminDiagnostics access guard"], "Restricts admin controls to authenticated admin role"],
+  ["TC-DASH-013", "System health visualizer latency ping test", "Dashboard", "functional", "Telemetry", ["Click 'Ping Server' button"], "Measures roundtrip HTTP latency to /api/health"],
+  ["TC-DASH-014", "Sidebar collapsible toggle interaction", "Dashboard", "ui", "Sidebar", ["Click sidebar collapse toggle button"], "Toggles sidebar between expanded and icon-only mode"],
+  ["TC-DASH-015", "Sidebar active route navigation highlight", "Dashboard", "ui", "Sidebar", ["Navigate to /dashboard"], "Applies active glow highlight to Dashboard nav item"],
+  ["TC-DASH-016", "User avatar menu dropdown options", "Dashboard", "ui", "Header", ["Click user avatar in top right"], "Opens menu with Profile, Settings, and Logout"],
+  ["TC-DASH-017", "Global search bar input focus (/) shortcut", "Dashboard", "ui", "Header", ["Press '/' key on dashboard"], "Focuses global search bar immediately"],
+  ["TC-DASH-018", "System status overall banner (All Systems Nominal)", "Dashboard", "ui", "Status Banner", ["Inspect health banner"], "Displays green status banner with nominal badge"],
+  ["TC-DASH-019", "Soundscape audio volume mute toggle in header", "Dashboard", "ui", "Header", ["Click sound icon in header bar"], "Mutes / unmutes background ambient audio"],
+  ["TC-DASH-020", "VoiceAssistant modal trigger button in header", "Dashboard", "ui", "Header", ["Click microphone icon in header"], "Opens floating Voice Assistant dialog"],
+  ["TC-DASH-021", "Export system diagnostics telemetry to JSON", "Dashboard", "functional", "Telemetry", ["Click 'Export Diagnostics'"], "Downloads telemetry JSON snapshot"],
+  ["TC-DASH-022", "Keyboard navigation support for dashboard cards", "Dashboard", "ui", "Accessibility", ["Navigate dashboard with Tab key"], "Focus rings appear clearly on interactive cards"],
+  ["TC-DASH-023", "Dashboard responsive layout on mobile viewport (<768px)", "Dashboard", "ui", "Responsive", ["Resize window to 375px width"], "Stalls grid to single column mobile card stack"],
+  ["TC-DASH-024", "Dashboard widget drag-and-drop rearrangement", "Dashboard", "ui", "Customization", ["Drag 'Health Gauge' card above 'Activity'"], "Reorders cards and saves layout preference"],
+  ["TC-DASH-025", "Refresh telemetry data button interaction", "Dashboard", "functional", "Telemetry", ["Click 'Refresh' button in header"], "Re-fetches latest server and system stats"],
+  ["TC-DASH-026", "Session duration live ticker in user widget", "Dashboard", "ui", "User Profile", ["Observe active session timer"], "Counts up active minutes in current session"],
+  ["TC-DASH-027", "KrishnaGuardian security score gauge (98/100)", "Dashboard", "ui", "Guardian", ["Inspect Guardian card"], "Displays circular progress gauge with security score"],
+  ["TC-DASH-028", "UlosUniversalLife lifestyle wellness tracker card", "Dashboard", "ui", "Wellness", ["Inspect Ulos card on dashboard"], "Displays mindfulness, hydration, and goal stats"],
+  ["TC-DASH-029", "Quick note scratchpad widget in dashboard", "Dashboard", "functional", "Scratchpad", ["Type note in dashboard scratchpad"], "Auto-saves note text to localStorage"],
+  ["TC-DASH-030", "System error boundary fallback for broken card", "Dashboard", "ui", "Error Handling", ["Simulate runtime error in single widget"], "Renders error fallback without crashing entire page"],
+  ["TC-DASH-031", "AI token usage billing meter card", "Dashboard", "ui", "Billing", ["Inspect token usage progress bar"], "Displays tokens used vs monthly plan quota"],
+  ["TC-DASH-032", "Dark mode glassmorphism backdrop blur verification", "Dashboard", "ui", "Styling", ["Inspect card CSS backdrop-filter"], "Applies backdrop-blur-md with semi-transparent background"],
+  ["TC-DASH-033", "Favorite tools quick access pinned bar", "Dashboard", "ui", "Customization", ["Pin 'Vision' to top bar"], "Renders Vision quick icon in top pinned tools row"],
+  ["TC-DASH-034", "Keyboard shortcut guide modal (? key)", "Dashboard", "ui", "Help", ["Press '?' on dashboard"], "Opens modal listing all application hotkeys"],
+  ["TC-DASH-035", "Server connection status indicator tooltip", "Dashboard", "ui", "Header", ["Hover over green connection dot"], "Displays 'Connected to Krishna Neural Core (3000)'"],
+  ["TC-DASH-036", "Voice command help guide drawer", "Dashboard", "ui", "Voice Assistant", ["Click 'Voice Commands Guide'"], "Opens drawer with sample voice phrases"],
+  ["TC-DASH-037", "Performance latency graph timeline visual", "Dashboard", "ui", "Analytics", ["Inspect latency graph in diagnostics"], "Plots latency over time with mini sparkline"],
+  ["TC-DASH-038", "Clean transition animations between routes", "Dashboard", "ui", "Motion", ["Navigate between Dashboard and AiCore"], "Applies Framer Motion page fade-in transition"],
+  ["TC-DASH-039", "User timezone automatic detection and formatting", "Dashboard", "unit", "Utils", ["Format date with local timezone"], "Displays dates in user's local timezone format"],
+  ["TC-DASH-040", "High contrast accessibility mode toggle", "Dashboard", "ui", "Accessibility", ["Enable high contrast in settings"], "Applies high contrast borders and text colors"],
+];
+
+dashTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 8. SECURITY, PERFORMANCE & REGRESSION (TC-ENG-001 to TC-ENG-060)
+// ─────────────────────────────────────────────────────────────
+const engTests = [
+  ["TC-ENG-001", "Repository code scan for exposed private keys", "Security", "security", "Secrets", ["Scan all .ts, .tsx, .json files"], "0 private keys or hardcoded passwords found"],
+  ["TC-ENG-002", "Repository scan for hardcoded Firebase secret tokens", "Security", "security", "Secrets", ["Scan source files for AIzaSy tokens"], "0 hardcoded production Firebase tokens"],
+  ["TC-ENG-003", "Firestore security rules deny unauthorized write", "Security", "security", "Database", ["Inspect firestore.rules"], "Does not contain 'allow read, write: if true;'"],
+  ["TC-ENG-004", "Express JSON body parser max limit protection", "Security", "security", "Server", ["Inspect express.json() limit setting"], "Configured with safe 50mb payload limit"],
+  ["TC-ENG-005", "CORS policy and security header middleware", "Security", "security", "Network", ["Inspect server response headers"], "Sets secure content headers on API responses"],
+  ["TC-ENG-006", "Email enumeration protection in auth routes", "Security", "security", "Auth API", ["Test forgot-password error responses"], "Consistent responses for existing and non-existing emails"],
+  ["TC-ENG-007", "Cryptographic token generator entropy (64 hex chars)", "Security", "security", "Auth Mailer", ["Generate 100 reset tokens"], "All 100 tokens are unique and 64 characters"],
+  ["TC-ENG-008", "Token expiration verification logic (1 hour TTL)", "Security", "security", "Auth Mailer", ["Verify token past expiration window"], "Returns false for expired tokens"],
+  ["TC-ENG-009", "XSS injection prevention in user display names", "Security", "security", "User Profile", ["Set profile name to '<img src=x onerror=alert(1)>'"], "Escapes HTML entities safely"],
+  ["TC-ENG-010", "SQL/NoSQL injection string escaping in server routes", "Security", "security", "Server", ["Pass nested object as parameter"], "Validates types strictly before database queries"],
+  ["TC-ENG-011", "Rate limit bucket reset timer accuracy", "Security", "security", "Rate Limiter", ["Exceed rate limit", "Wait for window"], "Bucket resets correctly after rate limit window"],
+  ["TC-ENG-012", "Prevent error stack traces leaking to client in prod", "Security", "security", "Error Handling", ["Trigger server 500 error in prod mode"], "Returns sanitized error envelope without stack trace"],
+  ["TC-ENG-013", "NPM dependency security audit verification", "Security", "security", "Dependencies", ["Inspect package.json dependencies"], "All core runtime packages match pinned versions"],
+  ["TC-ENG-014", "Strict TypeScript compilation check (tsc --noEmit)", "Regression", "regression", "TypeScript", ["Execute npx tsc --noEmit"], "0 compilation errors across entire codebase"],
+  ["TC-ENG-015", "Vite production frontend build verification", "Regression", "regression", "Vite Build", ["Execute npx vite build"], "Builds dist/ successfully with index.html & assets"],
+  ["TC-ENG-016", "Esbuild production backend bundle verification", "Regression", "regression", "Esbuild", ["Execute esbuild server.ts"], "Produces production dist/server.cjs bundle"],
+  ["TC-ENG-017", "Server entry points file integrity check", "Regression", "regression", "Server", ["Verify server.ts and backend/server.ts"], "Both server entry files present and valid"],
+  ["TC-ENG-018", "Static distribution directory assets check", "Regression", "regression", "Distribution", ["Inspect dist/ directory"], "Contains CSS, JS chunks, and HTML entry"],
+  ["TC-ENG-019", "HTML entry DOCTYPE and root element check", "Regression", "regression", "HTML Entry", ["Inspect index.html"], "Contains <!DOCTYPE html>, #root, and title tag"],
+  ["TC-ENG-020", "Package.json scripts consistency check", "Regression", "regression", "Config", ["Inspect package.json scripts"], "Contains dev, build, typecheck, lint, test, qa:report"],
+  ["TC-ENG-021", "Package-lock.json cross-platform sync check", "Regression", "regression", "Config", ["Validate package-lock.json dependencies"], "Lockfile aligns with package.json without platform lock"],
+  ["TC-ENG-022", "Health endpoint response time benchmark (<100ms)", "Performance", "performance", "API Benchmark", ["Measure GET /api/health latency"], "Responds within 50ms average latency"],
+  ["TC-ENG-023", "Health endpoint P50 latency benchmark", "Performance", "performance", "API Benchmark", ["Execute 50 requests to /api/health"], "P50 latency <= 30ms"],
+  ["TC-ENG-024", "Health endpoint P95 latency benchmark", "Performance", "performance", "API Benchmark", ["Calculate 95th percentile latency"], "P95 latency <= 80ms"],
+  ["TC-ENG-025", "Health endpoint P99 latency benchmark", "Performance", "performance", "API Benchmark", ["Calculate 99th percentile latency"], "P99 latency <= 150ms"],
+  ["TC-ENG-026", "Server throughput requests per second (RPS >= 200)", "Performance", "performance", "Throughput", ["Simulate concurrent burst requests"], "Handles >= 200 RPS without error"],
+  ["TC-ENG-027", "Server error rate under load (< 0.1%)", "Performance", "performance", "Throughput", ["Execute 100 requests"], "0 error responses (0.0% error rate)"],
+  ["TC-ENG-028", "Production JS bundle size budget check (<2.5MB)", "Performance", "performance", "Bundle Size", ["Measure dist/assets/*.js size"], "Main bundle gzip size within budget"],
+  ["TC-ENG-029", "Production CSS stylesheet size budget (<200KB)", "Performance", "performance", "Bundle Size", ["Measure dist/assets/*.css size"], "CSS stylesheet size <= 200KB"],
+  ["TC-ENG-030", "Memory leak inspection in event listener cleanup", "Performance", "performance", "Memory", ["Mount and unmount components 20 times"], "Event listeners detached and memory reclaimed"],
+  ["TC-ENG-031", "DOM node count optimization on main views", "Performance", "performance", "DOM Count", ["Count DOM elements in view"], "Total DOM nodes <= 1500 per view"],
+  ["TC-ENG-032", "ThreeJS WebGL context loss recovery handler", "Performance", "performance", "WebGL", ["Simulate webglcontextlost event"], "Restores scene when context is restored"],
+  ["TC-ENG-033", "Image asset lazy loading attribute check", "Performance", "performance", "Assets", ["Inspect img tags across views"], "Uses loading='lazy' for offscreen images"],
+  ["TC-ENG-034", "Browser local storage quota safety check", "Performance", "performance", "Storage", ["Test storage write wrapper"], "Catches QuotaExceededError and trims oldest cache"],
+  ["TC-ENG-035", "CSS transition hardware acceleration check", "Performance", "performance", "CSS", ["Inspect motion CSS properties"], "Uses transform and opacity for GPU acceleration"],
+  ["TC-ENG-036", "Selenium headless Chrome driver launch verification", "Selenium", "e2e", "Selenium E2E", ["Initialize headless browser session"], "Browser opens in headless mode successfully"],
+  ["TC-ENG-037", "Selenium Home page navigation & banner assertion", "Selenium", "e2e", "Selenium E2E", ["Navigate to baseURL /", "Assert header visible"], "Home page renders navigation header"],
+  ["TC-ENG-038", "Selenium Login page form interaction", "Selenium", "e2e", "Selenium E2E", ["Navigate to /login", "Enter credentials"], "Form fields accept text and update value"],
+  ["TC-ENG-039", "Selenium AiCore chat interaction workflow", "Selenium", "e2e", "Selenium E2E", ["Navigate to /aicore", "Type prompt"], "Chat input updates state cleanly"],
+  ["TC-ENG-040", "Selenium Vision page drag zone presence check", "Selenium", "e2e", "Selenium E2E", ["Navigate to /krishnavision"], "Drop zone element is present in DOM"],
+  ["TC-ENG-041", "Selenium Learn course card click interaction", "Selenium", "e2e", "Selenium E2E", ["Navigate to /krishnalearn"], "Course cards render and respond to clicks"],
+  ["TC-ENG-042", "Selenium Agent task creation workflow", "Selenium", "e2e", "Selenium E2E", ["Navigate to /krishnaagent"], "Goal input is interactive and responsive"],
+  ["TC-ENG-043", "Selenium NeuralCanvas 2D/3D viewport mount", "Selenium", "e2e", "Selenium E2E", ["Navigate to /neuralcanvas"], "Canvas element mounts into viewport"],
+  ["TC-ENG-044", "Selenium Theme toggle button DOM click", "Selenium", "e2e", "Selenium E2E", ["Click theme toggle icon in navigation"], "Updates document element class name"],
+  ["TC-ENG-045", "Selenium Screenshot capture on test assertion", "Selenium", "e2e", "Selenium E2E", ["Capture page screenshot"], "Produces valid PNG screenshot data buffer"],
+  ["TC-ENG-046", "Appium mobile viewport emulation (iPhone SE 375x667)", "Appium", "e2e", "Mobile E2E", ["Set viewport to 375x667"], "Renders mobile navigation drawer cleanly"],
+  ["TC-ENG-047", "Appium mobile viewport emulation (iPhone 14 390x844)", "Appium", "e2e", "Mobile E2E", ["Set viewport to 390x844"], "Layout adapts with appropriate padding"],
+  ["TC-ENG-048", "Appium mobile viewport emulation (Pixel 7 412x915)", "Appium", "e2e", "Mobile E2E", ["Set viewport to 412x915"], "Renders Android adaptive layout elements"],
+  ["TC-ENG-049", "Appium mobile touch gesture swipe drawer trigger", "Appium", "e2e", "Mobile E2E", ["Simulate horizontal touch swipe"], "Opens mobile navigation drawer"],
+  ["TC-ENG-050", "Appium mobile virtual keyboard input adjustment", "Appium", "e2e", "Mobile E2E", ["Focus input field on mobile viewport"], "Chat input shifts above mobile keyboard"],
+  ["TC-ENG-051", "Appium mobile offline network detection badge", "Appium", "e2e", "Mobile E2E", ["Simulate mobile airplane mode"], "Displays offline status indicator"],
+  ["TC-ENG-052", "Appium mobile device orientation change handler", "Appium", "e2e", "Mobile E2E", ["Rotate viewport from portrait to landscape"], "Recomputes canvas aspect ratio smoothly"],
+  ["TC-ENG-053", "Appium mobile standalone APK capability check", "Appium", "e2e", "Android", ["Inspect android/ capacitor/build directory"], "Android workspace structure present"],
+  ["TC-ENG-054", "Test results JSON single source of truth verification", "Regression", "regression", "Reporting", ["Generate reports/test-results.json"], "JSON contains valid meta, summary, and results"],
+  ["TC-ENG-055", "Excel report generation with 15 worksheets check", "Regression", "regression", "Reporting", ["Execute generateExcelReport.cjs"], "Produces Krishna-Test-Report.xlsx with 15 sheets"],
+  ["TC-ENG-056", "HTML QA dashboard generation verification", "Regression", "regression", "Reporting", ["Execute generateHtmlReport.cjs"], "Produces interactive index.html with 0 errors"],
+  ["TC-ENG-057", "Dynamic GitHub Step Summary generation verification", "Regression", "regression", "Reporting", ["Execute generateGithubSummary.cjs"], "Produces markdown summary with metrics"],
+  ["TC-ENG-058", "Quality gate validation check (TOTAL >= 400, FAILED == 0)", "Regression", "regression", "Quality Gate", ["Evaluate test metrics against quality gate"], "Quality gate evaluates to PASS (Deployment Ready)"],
+  ["TC-ENG-059", "Zero hardcoded test result statistics verification", "Regression", "regression", "Quality Gate", ["Verify all report numbers match test-results.json"], "100% dynamic synchronization across reports"],
+  ["TC-ENG-060", "Artifact packaging and upload integrity check", "Regression", "regression", "CI/CD", ["Verify output directory structure"], "reports/ contains JSON, Excel, and HTML"],
+];
+
+engTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 9. DEVICE HUB & HARDWARE INTEGRATION (TC-DEV-001 to TC-DEV-030)
+// ─────────────────────────────────────────────────────────────
+const deviceTests = [
+  ["TC-DEV-001", "Device Hub hardware telemetry status view", "Device Hub", "ui", "Device Hub", ["Inspect hardware telemetry cards"], "Renders CPU, GPU, memory, and battery indicators"],
+  ["TC-DEV-002", "Navigator hardwareConcurrency CPU core detection", "Device Hub", "unit", "Hardware", ["Query navigator.hardwareConcurrency"], "Detects active logical CPU core count"],
+  ["TC-DEV-003", "Network Information API effective connection type", "Device Hub", "unit", "Network", ["Query navigator.connection.effectiveType"], "Detects 4G, 5G, or WiFi network connection"],
+  ["TC-DEV-004", "Battery Status API level and charging state", "Device Hub", "functional", "Battery", ["Query navigator.getBattery()"], "Detects battery percentage and charging state"],
+  ["TC-DEV-005", "Screen resolution and window devicePixelRatio", "Device Hub", "unit", "Display", ["Query window.devicePixelRatio and screen.width"], "Reports correct viewport and display density"],
+  ["TC-DEV-006", "Bluetooth Web API availability detection", "Device Hub", "functional", "Bluetooth", ["Check navigator.bluetooth presence"], "Reports Bluetooth controller availability"],
+  ["TC-DEV-007", "Audio input/output device enumeration", "Device Hub", "functional", "Audio Devices", ["Query navigator.mediaDevices.enumerateDevices()"], "Lists connected microphones and speaker outputs"],
+  ["TC-DEV-008", "WebRTC peer connection RTCPeerConnection readiness", "Device Hub", "unit", "WebRTC", ["Instantiate new RTCPeerConnection()"], "Initializes WebRTC stack with ICE candidate handlers"],
+  ["TC-DEV-009", "Fullscreen API document.fullscreenEnabled check", "Device Hub", "ui", "Display", ["Verify document.fullscreenEnabled"], "Fullscreen capability verified for immersive mode"],
+  ["TC-DEV-010", "Gamepad API connection event listener", "Device Hub", "functional", "Gamepad", ["Listen for window 'gamepadconnected'"], "Registers controller event listener"],
+  ["TC-DEV-011", "Device orientation and motion sensor listeners", "Device Hub", "functional", "Sensors", ["Listen for 'deviceorientation' event"], "Binds sensor listeners for gyroscope inputs"],
+  ["TC-DEV-012", "StorageManager estimate API quota query", "Device Hub", "unit", "Storage", ["Query navigator.storage.estimate()"], "Returns storage usage and remaining quota bytes"],
+  ["TC-DEV-013", "Web Worker background concurrency support", "Device Hub", "unit", "Concurrency", ["Instantiate inline Worker or Blob worker"], "Spawns worker thread for heavy computation"],
+  ["TC-DEV-014", "WebAssembly (Wasm) runtime capability check", "Device Hub", "unit", "Wasm", ["Verify WebAssembly.validate()"], "Confirms WebAssembly JIT engine is supported"],
+  ["TC-DEV-015", "Clipboard API navigator.clipboard write capability", "Device Hub", "functional", "Clipboard", ["Query navigator.clipboard.writeText"], "Verifies clipboard write permission support"],
+  ["TC-DEV-016", "Notification API permission status query", "Device Hub", "functional", "Notifications", ["Check Notification.permission"], "Returns 'default', 'granted', or 'denied'"],
+  ["TC-DEV-017", "Geolocation API navigator.geolocation readiness", "Device Hub", "functional", "Geolocation", ["Verify navigator.geolocation API"], "Handles location requests with privacy permission prompt"],
+  ["TC-DEV-018", "Web Share API navigator.share fallback check", "Device Hub", "functional", "Web Share", ["Check navigator.canShare()"], "Provides native share dialog or fallback clipboard modal"],
+  ["TC-DEV-019", "Screen Wake Lock API navigator.wakeLock support", "Device Hub", "functional", "Wake Lock", ["Request 'screen' wakeLock"], "Prevents screen dimming during AI voice conversations"],
+  ["TC-DEV-020", "Vibration API navigator.vibrate haptic feedback", "Device Hub", "functional", "Haptics", ["Invoke navigator.vibrate([50])"], "Triggers subtle haptic feedback pulse on mobile"],
+  ["TC-DEV-021", "PWA beforeinstallprompt event handling", "Device Hub", "ui", "PWA", ["Listen for 'beforeinstallprompt'"], "Captures install prompt and renders 'Install App' banner"],
+  ["TC-DEV-022", "Service Worker registration lifecycle check", "Device Hub", "functional", "Service Worker", ["Check navigator.serviceWorker"], "Registers background service worker for caching"],
+  ["TC-DEV-023", "CacheStorage precaching of core assets", "Device Hub", "functional", "Cache", ["Query caches.open('krishna-static-v1')"], "Caches shell assets for offline availability"],
+  ["TC-DEV-024", "Web App Manifest JSON schema validation", "Device Hub", "unit", "Manifest", ["Verify metadata.json / manifest schema"], "Contains app name, icons, start_url, display mode"],
+  ["TC-DEV-025", "Apple touch icons and favicon link tags", "Device Hub", "ui", "Meta Icons", ["Inspect index.html link[rel=icon]"], "Declares favicon and apple-touch-icon links"],
+  ["TC-DEV-026", "Offline fallback page render during disconnect", "Device Hub", "functional", "Offline Mode", ["Simulate network offline event"], "Renders offline indicator banner with cached features"],
+  ["TC-DEV-027", "PWA theme color meta tag in HTML head", "Device Hub", "ui", "Meta Theme", ["Inspect meta[name=theme-color]"], "Matches brand theme dark hex color"],
+  ["TC-DEV-028", "Web App display mode 'standalone' check", "Device Hub", "ui", "Manifest", ["Check manifest display property"], "Configured for standalone app window presentation"],
+  ["TC-DEV-029", "App update notification on new service worker", "Device Hub", "functional", "PWA Update", ["Simulate service worker 'updatefound'"], "Displays 'New version available. Reload?' toast"],
+  ["TC-DEV-030", "Hardware accelerated WebGL 2.0 context check", "Device Hub", "unit", "WebGL 2", ["Query canvas.getContext('webgl2')"], "Verifies WebGL 2.0 GPU pipeline readiness"],
+];
+
+deviceTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// ─────────────────────────────────────────────────────────────
+// 10. VOICE ASSISTANT & SPEECH (TC-VOC-001 to TC-VOC-020)
+// ─────────────────────────────────────────────────────────────
+const voiceTests = [
+  ["TC-VOC-001", "Web Speech Recognition API initialization", "Voice", "functional", "Speech Recognition", ["Check window.SpeechRecognition || window.webkitSpeechRecognition"], "Speech recognition constructor available"],
+  ["TC-VOC-002", "Continuous listening mode toggle control", "Voice", "ui", "Voice Assistant", ["Toggle continuous listening switch"], "Keeps microphone active between speech pauses"],
+  ["TC-VOC-003", "Speech recognition confidence thresholding (>= 0.7)", "Voice", "unit", "Speech Recognition", ["Filter recognition results by confidence"], "Discards low confidence audio artifacts"],
+  ["TC-VOC-004", "Interim results live transcript stream rendering", "Voice", "ui", "Voice Assistant", ["Speak phrase into microphone"], "Renders interim text in real-time before finalization"],
+  ["TC-VOC-005", "Wake word detection ('Hey Krishna')", "Voice", "functional", "Wake Word", ["Simulate speech with 'Hey Krishna' prefix"], "Triggers assistant activation and focus"],
+  ["TC-VOC-006", "Voice pitch slider adjustment (0.5 to 2.0)", "Voice", "ui", "Speech Synthesis", ["Adjust pitch slider to 1.2"], "Updates SpeechSynthesisUtterance pitch parameter"],
+  ["TC-VOC-007", "Voice speaking rate speed slider (0.5x to 2.0x)", "Voice", "ui", "Speech Synthesis", ["Adjust rate slider to 1.1x"], "Updates SpeechSynthesisUtterance rate parameter"],
+  ["TC-VOC-008", "Speech synthesis voice gender and profile selector", "Voice", "ui", "Speech Synthesis", ["Select 'Krishna Neural' voice profile"], "Selects preferred system speech synthesis voice"],
+  ["TC-VOC-009", "Speech synthesis language locale selector", "Voice", "ui", "Speech Synthesis", ["Select locale 'en-US' or 'en-IN'"], "Sets utterance language locale parameter"],
+  ["TC-VOC-010", "Audio waveform canvas visualizer rendering", "Voice", "ui", "Voice Visualizer", ["Mount AudioVisualizer component", "Process audio data"], "Canvas animates frequency amplitude bars"],
+  ["TC-VOC-011", "Audio noise gate background filtering", "Voice", "unit", "Audio Processing", ["Filter audio buffer below -45dB threshold"], "Suppresses background noise when user is silent"],
+  ["TC-VOC-012", "Microphone mute toggle global hotkey ('M' key)", "Voice", "functional", "Keyboard Shortcut", ["Press 'M' key in Voice Assistant"], "Toggles microphone mute state instantly"],
+  ["TC-VOC-013", "Speech recognition auto-restart on network timeout", "Voice", "functional", "Speech Recognition", ["Simulate SpeechRecognition onend event"], "Restarts recognition loop if continuous mode is active"],
+  ["TC-VOC-014", "Audio recording stream buffer to WAV conversion", "Voice", "unit", "Audio Processing", ["Convert Float32Array PCM buffer to WAV"], "Generates valid WAV audio blob with RIFF header"],
+  ["TC-VOC-015", "Voice assistant draggable floating bubble widget", "Voice", "ui", "Voice Assistant", ["Drag floating voice bubble across screen"], "Updates position coordinates and retains on unmount"],
+  ["TC-VOC-016", "Voice assistant minimize to taskbar action", "Voice", "ui", "Voice Assistant", ["Click minimize button on voice modal"], "Collapses modal into mini status bar pill"],
+  ["TC-VOC-017", "Voice assistant transcript copy to clipboard", "Voice", "functional", "Voice Assistant", ["Click 'Copy Transcript' button"], "Copies full speech conversation log to clipboard"],
+  ["TC-VOC-018", "Voice assistant command history backlog list", "Voice", "ui", "Voice Assistant", ["Inspect recent spoken commands list"], "Displays last 10 transcribed voice commands"],
+  ["TC-VOC-019", "Voice command disambiguation clarification modal", "Voice", "ui", "Voice Assistant", ["Speak ambiguous query 'open canvas or vision'"], "Presents quick choice pills to clarify intent"],
+  ["TC-VOC-020", "Audio playback error recovery fallback", "Voice", "functional", "Speech Synthesis", ["Simulate SpeechSynthesis error event"], "Falls back to text display without blocking chat flow"],
+];
+
+voiceTests.forEach(([id, title, cat, type, mod, steps, exp]) => addCase(id, title, cat, type, mod, steps, exp));
+
+// Write the output catalog
+const outDir = path.dirname(OUTPUT_FILE);
+if (!fs.existsSync(outDir)) {
+  fs.mkdirSync(outDir, { recursive: true });
 }
 
-function writeCatalog(cases) {
-  const outDir = path.dirname(OUTPUT_FILE);
-  if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir, { recursive: true });
-  }
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(cases, null, 2), 'utf8');
-  console.log(`Generated ${cases.length} test case entries to ${OUTPUT_FILE}`);
-}
-
-let catalog = loadYamlFiles();
-if (catalog.length < 400) {
-  const synthetic = generateSyntheticCases(catalog.length);
-  catalog = catalog.concat(synthetic);
-}
-writeCatalog(catalog);
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(testCases, null, 2), 'utf8');
+console.log(`[QA] Successfully generated ${testCases.length} unique, meaningful test cases in ${OUTPUT_FILE}`);

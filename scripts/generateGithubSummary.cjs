@@ -58,9 +58,9 @@ const durationStr = (totalDuration / 1000).toFixed(2) + 's';
 const isPassing = failed === 0 && passed > 0;
 
 // ── Suite Breakdown ─────────────────────────────────────────────────────
-const suiteCategories = ['Static Validation', 'Frontend', 'Backend', 'End-to-End', 'Security', 'Build'];
+const allCategories = [...new Set(results.map(r => r.category))];
 
-const suites = suiteCategories.map(cat => {
+const suites = allCategories.map(cat => {
   const suiteTests = results.filter(r => r.category === cat);
   const sTotal = suiteTests.length;
   const sPassed = suiteTests.filter(r => r.status === 'PASS').length;
@@ -77,7 +77,7 @@ function getQualityGateStatus(testIdPattern) {
 }
 
 function getSuiteQualityGate(category) {
-  const suiteTests = results.filter(r => r.category === category);
+  const suiteTests = results.filter(r => r.category === category || (r.category && r.category.includes(category)));
   if (suiteTests.length === 0) return '⚪ N/A';
   const allPassed = suiteTests.every(r => r.status === 'PASS');
   return allPassed ? '🟢 PASS' : '🔴 FAIL';
@@ -85,10 +85,13 @@ function getSuiteQualityGate(category) {
 
 const qualityGates = [
   { name: 'TypeScript Type Check', status: getQualityGateStatus('TC-STATIC-001') },
-  { name: 'ESLint / Linting', status: getQualityGateStatus('TC-STATIC-010') },
-  { name: 'Unit Tests', status: getSuiteQualityGate('Frontend') },
-  { name: 'Integration Tests', status: getSuiteQualityGate('Backend') },
-  { name: 'E2E Tests', status: getSuiteQualityGate('End-to-End') },
+  { name: 'ESLint / Code Quality', status: getQualityGateStatus('TC-STATIC-010') },
+  { name: 'Unit Tests', status: getSuiteQualityGate('Unit') },
+  { name: 'API / Backend Tests', status: getSuiteQualityGate('API') },
+  { name: 'Integration Tests', status: getSuiteQualityGate('Integration') },
+  { name: 'Selenium E2E Tests', status: getSuiteQualityGate('Selenium') },
+  { name: 'Security Hardening', status: getSuiteQualityGate('Security') },
+  { name: 'Performance Benchmarks', status: getSuiteQualityGate('Performance') },
   { name: 'Production Build', status: getSuiteQualityGate('Build') },
 ];
 

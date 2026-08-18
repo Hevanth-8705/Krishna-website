@@ -338,11 +338,11 @@ async function generateReport() {
   // --------------------------------------------------------
   const categorySheets = [
     { name: 'Functional Testing', filter: 'Functional' },
-    { name: 'UI UX Testing', filter: 'UI UX' },
+    { name: 'UI UX Testing', filter: 'UI' },
     { name: 'Unit Testing', filter: 'Unit' },
     { name: 'API Testing', filter: 'API' },
     { name: 'Integration Testing', filter: 'Integration' },
-    { name: 'Selenium E2E', filter: 'Selenium E2E' },
+    { name: 'Selenium E2E', filter: 'Selenium' },
     { name: 'Appium', filter: 'Appium' },
     { name: 'Security', filter: 'Security' },
     { name: 'Performance', filter: 'Performance' },
@@ -350,7 +350,7 @@ async function generateReport() {
   ];
 
   categorySheets.forEach(({ name, filter }) => {
-    const filtered = results.filter(r => r.category === filter);
+    const filtered = results.filter(r => r.category === name || r.category === filter || (r.category && r.category.includes(filter)));
     addTestSheet(workbook, name, filtered);
   });
 
@@ -470,7 +470,7 @@ async function generateReport() {
 
   // Quality gate assessment — all calculated dynamically
   function getGateStatus(category) {
-    const catTests = results.filter(r => r.category === category);
+    const catTests = results.filter(r => r.category === category || (r.category && r.category.includes(category)));
     if (catTests.length === 0) return 'NOT RUN';
     const catFailed = catTests.filter(r => r.status === 'FAIL').length;
     const catBlocked = catTests.filter(r => r.status === 'BLOCKED').length;

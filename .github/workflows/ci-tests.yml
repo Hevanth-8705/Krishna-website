@@ -1,4 +1,4 @@
-name: Krishna Website Automated Tests & Quality Report
+name: Krishna Website Quality & CI/CD Pipeline
 
 on:
   push:
@@ -25,9 +25,47 @@ jobs:
       - name: Install Dependencies
         run: npm ci || npm install
 
-      - name: Run Full Quality Suite & Generate Dashboard
+      - name: Run Type Checking & Linting
+        run: |
+          npm run typecheck
+          npm run lint
+
+      - name: Execute Production Build
+        run: npm run build
+
+      - name: Run Jest Unit Tests
+        run: npm run test:unit
+
+      - name: Start Backend Server & Verify Health Check
+        run: |
+          npm run start &
+          SERVER_PID=$!
+          echo "Waiting for Krishna Neural Core server on http://localhost:3000/api/health..."
+          READY=0
+          for i in {1..30}; do
+            if curl -s -f http://localhost:3000/api/health > /dev/null 2>&1; then
+              echo "Server health check passed on attempt $i!"
+              READY=1
+              break
+            fi
+            echo -n "."
+            sleep 1
+          done
+          if [ $READY -ne 1 ]; then
+            echo "Server health check failed."
+            kill $SERVER_PID 2>/dev/null || true
+            exit 1
+          fi
+
+      - name: Run Integration Tests
+        run: npm run test:integration
+
+      - name: Run Full Quality Suite & Generate Reports
         id: qa_suite
         run: npm run qa:report
+
+      - name: Enforce Automated Quality Gate
+        run: node scripts/validateQualityGate.cjs
 
       - name: Generate Dynamic GitHub Step Summary
         if: always()
@@ -37,7 +75,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: krishna-website-test-report
+          name: krishna-qa-report
           path: |
             test-results/
             reports/

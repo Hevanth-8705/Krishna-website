@@ -72,13 +72,35 @@ const commitShort = commitSha.length > 7 ? commitSha.substring(0, 7) : commitSha
 const generatedAt = meta.generatedAt || new Date().toISOString();
 
 // ── Suite Calculations ──────────────────────────────────────────────────
-const suiteCategories = ['Static Validation', 'Frontend', 'Backend', 'End-to-End', 'Security', 'Build'];
+const allCategories = [...new Set(results.map(r => r.category))];
 const suiteIcons = {
-  'Static Validation': '🔍', 'Frontend': '🎨', 'Backend': '⚙️',
-  'End-to-End': '🔗', 'Security': '🛡️', 'Build': '📦'
+  'Static Validation': '🔍',
+  'Frontend': '🎨',
+  'Backend': '⚙️',
+  'End-to-End': '🔗',
+  'Security': '🛡️',
+  'Build': '📦',
+  'Functional Testing': '⚡',
+  'UI UX Testing': '✨',
+  'Unit Testing': '🧪',
+  'API Testing': '📡',
+  'Integration Testing': '🔌',
+  'Selenium E2E': '🌐',
+  'Appium': '📱',
+  'Performance': '⚡',
+  'Regression': '🔄',
+  'Auth': '🔐',
+  'AiCore': '🧠',
+  'Vision': '👁️',
+  'Learn': '📚',
+  'Agent': '🤖',
+  'Canvas': '🎨',
+  'Dashboard': '📊',
+  'Device Hub': '🖥️',
+  'Voice': '🎙️',
 };
 
-const suiteSummary = suiteCategories.map(cat => {
+const suiteSummary = allCategories.map(cat => {
   const suiteTests = results.filter(r => r.category === cat);
   const cTotal = suiteTests.length;
   const cPassed = suiteTests.filter(r => r.status === 'PASS').length;
@@ -87,7 +109,7 @@ const suiteSummary = suiteCategories.map(cat => {
   const cDuration = suiteTests.reduce((a, r) => a + (r.duration || 0), 0);
   const cPassRate = cTotal > 0 ? ((cPassed / cTotal) * 100).toFixed(0) : '0';
   const cStatus = cFailed > 0 ? 'FAIL' : (cTotal > 0 && cPassed === cTotal ? 'PASS' : 'N/A');
-  return { category: cat, icon: suiteIcons[cat], total: cTotal, passed: cPassed, failed: cFailed, skipped: cSkipped, duration: cDuration, passRate: cPassRate, status: cStatus };
+  return { category: cat, icon: suiteIcons[cat] || '📋', total: cTotal, passed: cPassed, failed: cFailed, skipped: cSkipped, duration: cDuration, passRate: cPassRate, status: cStatus };
 });
 
 // ── Quality Gates (derived from actual test results) ────────────────────
@@ -96,17 +118,20 @@ function getGateFromTest(testId) {
   return t ? t.status : 'N/A';
 }
 function getGateFromSuite(category) {
-  const suiteTests = results.filter(r => r.category === category);
+  const suiteTests = results.filter(r => r.category === category || (r.category && r.category.includes(category)));
   if (suiteTests.length === 0) return 'N/A';
   return suiteTests.every(r => r.status === 'PASS') ? 'PASS' : 'FAIL';
 }
 
 const qualityGates = [
   { name: 'TypeScript Type Check', status: getGateFromTest('TC-STATIC-001') },
-  { name: 'ESLint / Linting', status: getGateFromTest('TC-STATIC-010') },
-  { name: 'Unit Tests', status: getGateFromSuite('Frontend') },
-  { name: 'Integration Tests', status: getGateFromSuite('Backend') },
-  { name: 'E2E Tests', status: getGateFromSuite('End-to-End') },
+  { name: 'ESLint / Code Quality', status: getGateFromTest('TC-STATIC-010') },
+  { name: 'Unit Tests', status: getGateFromSuite('Unit') },
+  { name: 'API / Backend Tests', status: getGateFromSuite('API') },
+  { name: 'Integration Tests', status: getGateFromSuite('Integration') },
+  { name: 'Selenium E2E Tests', status: getGateFromSuite('Selenium') },
+  { name: 'Security Hardening', status: getGateFromSuite('Security') },
+  { name: 'Performance Benchmarks', status: getGateFromSuite('Performance') },
   { name: 'Production Build', status: getGateFromSuite('Build') },
 ];
 
@@ -120,7 +145,7 @@ function esc(str) {
 function generateSuiteChart() {
   const barWidth = 60;
   const gap = 24;
-  const chartWidth = suiteCategories.length * (barWidth + gap) + gap;
+  const chartWidth = suiteSummary.length * (barWidth + gap) + gap;
   const maxVal = Math.max(...suiteSummary.map(s => s.total), 1);
   const chartHeight = 180;
 

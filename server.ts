@@ -212,9 +212,17 @@ async function startServer() {
     }
   });
 
-  // =========================================
-  // PRODUCTION SMTP AUTHENTICATION ROUTES
-  // =========================================
+  // Health Check Endpoints
+  app.get(['/health', '/api/health'], (_req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({
+      status: 'ok',
+      service: 'Krishna AI Neural Core',
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    });
+  });
 
   // 1. SMTP Diagnostic Endpoint
   app.get('/api/auth/smtp-status', async (req, res) => {
