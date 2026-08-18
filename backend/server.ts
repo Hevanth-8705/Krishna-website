@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { 
   verifySmtpConnection, 
@@ -22,11 +21,10 @@ import {
   type ToolResult
 } from './server/toolRegistry';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const ROOT_DIR = process.env.ROOT_DIR || process.cwd();
 
 // Load environment variables from the .env file located at the project root
-dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
+dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
 // Diagnostic log to confirm that the OpenAI API key is loaded (does NOT expose the key)
 console.log('[IMAGE AI] OPENAI_API_KEY configured:', Boolean(process.env.OPENAI_API_KEY));

@@ -1,11 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_DIR = path.resolve(__dirname, '..', 'data');
-const STORE_PATH = path.join(DATA_DIR, 'learn_store.json');
+const ROOT_DIR = process.env.ROOT_DIR || process.cwd();
+const DATA_DIR = process.env.DATA_DIR || path.resolve(ROOT_DIR, 'data');
+const STORE_PATH = process.env.STORE_PATH || path.join(DATA_DIR, 'learn_store.json');
 
 export interface VideoData {
   provider: 'youtube' | 'other';

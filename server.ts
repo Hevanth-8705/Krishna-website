@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 import { 
@@ -26,8 +25,7 @@ import {
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const ROOT_DIR = process.env.ROOT_DIR || process.cwd();
 
 // =========================================
 // GROQ AI SERVICE UTILITIES
@@ -1505,7 +1503,7 @@ Respond strictly with a single JSON object matching this schema:
     app.use(vite.middlewares);
   } else {
     // Production serving
-    const distPath = path.join(__dirname, 'dist');
+    const distPath = process.env.STATIC_DIR || path.resolve(ROOT_DIR, 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
