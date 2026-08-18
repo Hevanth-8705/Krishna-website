@@ -19,11 +19,17 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci || npm install
+
+      - name: Create Environment Configuration
+        run: |
+          cp .env.example .env
+          cp .env.example backend/.env
+          echo "CI environment .env files created from .env.example"
 
       - name: Run Type Checking & Linting
         run: |
