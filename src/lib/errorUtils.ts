@@ -59,7 +59,7 @@ export function normalizeApiError(error: unknown, fallbackMessage = 'An unexpect
     try {
       const jsonStr = JSON.stringify(errObj);
       if (jsonStr && jsonStr !== '{}' && jsonStr !== '[object Object]') {
-        if (errObj.message && typeof errObj.message === 'string') {
+        if (errObj.message && typeof errObj.message === 'string' && errObj.message.trim() !== '[object Object]') {
           return { message: errObj.message, code, status };
         }
       }

@@ -25,58 +25,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci || npm install
 
-      - name: Run Type Checking & Linting
-        run: npm run lint
-
-      - name: Run Unit & Backend Tests
-        run: npm run test:unit
-
-      - name: Run E2E Tests
-        run: npm run test:e2e
-
-      - name: Execute Production Build
-        run: npm run build
-
-      - name: Run Full Quality Suite & Generate HTML Dashboard
+      - name: Run Full Quality Suite & Generate Dashboard
+        id: qa_suite
         run: npm run qa:report
 
-      - name: Publish GitHub Step Summary
+      - name: Generate Dynamic GitHub Step Summary
         if: always()
-        run: |
-          echo "# Krishna Website — Automated Test Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Overall Status" >> $GITHUB_STEP_SUMMARY
-          echo "🟢 **PASS — 100% Pass Rate**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Results Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Total Tests** | 63 |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Passed** | 63 |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Failed** | 0 |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Skipped** | 0 |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Pass Rate** | **100%** |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Test Suites Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Suite | Total | Passed | Failed | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "| --- | --- | --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Static Validation** | 10 | 10 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Frontend** | 15 | 15 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Backend** | 13 | 13 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "| **End-to-End** | 8 | 8 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Security** | 5 | 5 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Build Pipeline** | 3 | 3 | 0 | PASS |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Quality Gates" >> $GITHUB_STEP_SUMMARY
-          echo "- **TypeScript Type Check:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "- **ESLint / Linting:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "- **Unit Tests:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "- **Integration Tests:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "- **E2E Tests:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "- **Production Build:** PASS" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Test Report Artifact" >> $GITHUB_STEP_SUMMARY
-          echo "Download the **krishna-website-test-report** artifact from this workflow run to view the interactive HTML QA dashboard." >> $GITHUB_STEP_SUMMARY
+        run: node scripts/generateGithubSummary.cjs
 
       - name: Upload Test Report Artifact
         if: always()
