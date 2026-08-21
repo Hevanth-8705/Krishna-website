@@ -1,8 +1,79 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    function existingData() {
+      return resource.data;
+    }
+
+    // Role and privilege escalation protection
+    // Normal client operations cannot set admin / role fields
+    function hasNoPrivilegeEscalation() {
+      return !('role' in incomingData()) &&
+             !('admin' in incomingData()) &&
+             !('isAdmin' in incomingData()) &&
+             !('securityLevel' in incomingData()) &&
+             !('permissions' in incomingData());
+    }
+
+    // -------------------------------------------------------------------------
+    // USERS COLLECTION: /users/{userId}
+    // Strict single-tenant ownership boundary using Firebase Auth UID
+    // -------------------------------------------------------------------------
+    match /users/{userId} {
+      // User can only read their own profile
+      allow read: if isOwner(userId);
+
+      // User can only create their own profile without privilege escalation
+      allow create: if isOwner(userId) &&
+                       (!('uid' in incomingData()) || incomingData().uid == userId) &&
+                       hasNoPrivilegeEscalation();
+
+      // User can only update their own profile; prevents identity transfer and privilege escalation
+      allow update: if isOwner(userId) &&
+                       (!('uid' in existingData()) || existingData().uid == userId) &&
+                       (!('uid' in incomingData()) || incomingData().uid == userId) &&
+                       hasNoPrivilegeEscalation();
+
+      // User can only delete their own profile
+      allow delete: if isOwner(userId);
+    }
+
+    // -------------------------------------------------------------------------
+    // USER SESSIONS COLLECTION: /user_sessions/{sessionId}
+    // Strict session ownership enforcement using userId field
+    // -------------------------------------------------------------------------
+    match /user_sessions/{sessionId} {
+      // User can only create a session record if userId matches their authenticated UID
+      allow create: if isAuthenticated() &&
+                       'userId' in incomingData() &&
+                       incomingData().userId == request.auth.uid;
+
+      // User can only read their own sessions (enforces query security for where("userId", "==", uid))
+      allow read: if isAuthenticated() &&
+                     existingData().userId == request.auth.uid;
+
+      // User can only update their own session; cannot transfer session ownership
+      allow update: if isAuthenticated() &&
+                       existingData().userId == request.auth.uid &&
+                       (!('userId' in incomingData()) || incomingData().userId == request.auth.uid);
+
+      // User can only delete their own session
+      allow delete: if isAuthenticated() &&
+                       existingData().userId == request.auth.uid;
     }
   }
 }

@@ -508,19 +508,6 @@ export default function UserProfile() {
                   />
                 </div>
 
-                {/* Auto Save Canvas */}
-                <div className="flex items-center justify-between p-3.5 bg-black/40 border border-white/10 rounded-xl">
-                  <div>
-                    <p className="text-xs font-medium text-white font-sans">Auto-Save Neural Canvas</p>
-                    <p className="text-[10px] text-gray-500 font-mono">Automatically syncs diagram changes to local memory storage.</p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={preferences.autoSaveCanvas}
-                    onChange={(e) => setPreferences({ ...preferences, autoSaveCanvas: e.target.checked })}
-                    className="w-4 h-4 rounded border-white/20 bg-black text-[#00E5FF] focus:ring-0 cursor-pointer"
-                  />
-                </div>
 
                 {/* Email Notifications Master & Granular Alerts Section */}
                 <div className="space-y-4 pt-4 border-t border-white/10">

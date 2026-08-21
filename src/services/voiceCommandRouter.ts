@@ -165,7 +165,6 @@ export async function executeVoiceCommand(
     { keywords: ['core', 'ai core', 'prompt weights', 'model settings'], route: '/core', name: 'Krishna AI Core', intentName: 'Nav: AI Core' },
     { keywords: ['vision', 'krishna vision', 'image analysis', 'visual intelligence', 'analyze image'], route: '/vision', name: 'Krishna Vision Engine', intentName: 'Nav: Krishna Vision' },
     { keywords: ['agent', 'krishna agent', 'task engine', 'agent mode', 'autonomous agent'], route: '/agent', name: 'Krishna Agent Engine', intentName: 'Nav: Krishna Agent' },
-    { keywords: ['canvas', 'drawing', 'vector canvas', 'neural canvas'], route: '/canvas', name: 'Neural Canvas Designer', intentName: 'Nav: Neural Canvas' },
     { keywords: ['voice assistant', 'voice page', 'voice UI'], route: '/voice', name: 'Voice Assistant Workspace', intentName: 'Nav: Voice Assistant' },
     { keywords: ['learn', 'education', 'study track', 'learning center'], route: '/learn', name: 'Adaptive Learning Center', intentName: 'Nav: Learning Center' },
     { keywords: ['guardian', 'firewall', 'security guardian', 'threat scan'], route: '/guardian', name: 'OS Guardian Firewall', intentName: 'Nav: OS Guardian' },

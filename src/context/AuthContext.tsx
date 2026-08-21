@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { auth, firebaseConfigValid, firebaseConfigErrors } from '../lib/firebase';
 import { sendVerificationEmail, EmailVerificationResult } from '../services/emailVerificationService';
 
 export interface AuthContextType {
@@ -8,10 +8,15 @@ export interface AuthContextType {
   loading: boolean;
   error: Error | null;
   isEmailVerified: boolean;
+  /** True when Firebase config is valid and auth operations can succeed */
+  firebaseReady: boolean;
+  /** Human-readable config error messages (empty when config is valid) */
+  configErrors: string[];
   signOut: () => Promise<void>;
   setError: (error: Error | null) => void;
   sendUserVerificationEmail: () => Promise<EmailVerificationResult>;
   reloadUser: () => Promise<boolean>;
+  loginAsGuest: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -19,42 +24,107 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   error: null,
   isEmailVerified: false,
+  firebaseReady: false,
+  configErrors: [],
   signOut: async () => {},
   setError: () => {},
   sendUserVerificationEmail: async () => ({ success: false, message: 'AuthContext not initialized' }),
   reloadUser: async () => false,
+  loginAsGuest: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      if (typeof window !== 'undefined' && localStorage.getItem('krishna_guest_operator') === 'true') {
+        return {
+          uid: 'guest-neural-operator-01',
+          email: 'operator@krishna-os.local',
+          displayName: 'Krishna Neural Operator',
+          photoURL: null,
+          emailVerified: true,
+          reload: async () => {},
+        } as unknown as User;
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (currentUser) => {
-        setUser(currentUser);
-        setLoading(false);
-      },
-      (err) => {
-        console.error('Firebase Auth State Change Error:', err);
-        setError(err);
-        setLoading(false);
-      }
-    );
+    // If Firebase config is invalid, skip the auth listener entirely —
+    // there's no point subscribing to auth state when Firebase can't work.
+    if (!firebaseConfigValid) {
+      setLoading(false);
+      return;
+    }
 
-    return () => unsubscribe();
+    try {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (currentUser) => {
+          if (currentUser) {
+            setUser(currentUser);
+            try { localStorage.removeItem('krishna_guest_operator'); } catch {}
+          } else {
+            try {
+              if (localStorage.getItem('krishna_guest_operator') === 'true') {
+                setUser({
+                  uid: 'guest-neural-operator-01',
+                  email: 'operator@krishna-os.local',
+                  displayName: 'Krishna Neural Operator',
+                  photoURL: null,
+                  emailVerified: true,
+                  reload: async () => {},
+                } as unknown as User);
+              } else {
+                setUser(null);
+              }
+            } catch {
+              setUser(null);
+            }
+          }
+          setLoading(false);
+        },
+        (err) => {
+          console.warn('Firebase Auth State Change Warning:', err);
+          setError(err);
+          setLoading(false);
+        }
+      );
+
+      return () => unsubscribe();
+    } catch (err: any) {
+      console.warn('Firebase Auth Listener initialization warning:', err);
+      setLoading(false);
+    }
   }, []);
+
+  const loginAsGuest = () => {
+    const mockUser: any = {
+      uid: 'guest-neural-operator-01',
+      email: 'operator@krishna-os.local',
+      displayName: 'Krishna Neural Operator',
+      photoURL: null,
+      emailVerified: true,
+      reload: async () => {},
+    };
+    try { localStorage.setItem('krishna_guest_operator', 'true'); } catch {}
+    setUser(mockUser);
+  };
 
   const signOut = async () => {
     try {
+      try { localStorage.removeItem('krishna_guest_operator'); } catch {}
       await firebaseSignOut(auth);
       setUser(null);
     } catch (err) {
+      setUser(null);
       const authErr = err instanceof Error ? err : new Error('Failed to sign out');
       setError(authErr);
-      throw authErr;
     }
   };
 
@@ -68,12 +138,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const reloadUser = async (): Promise<boolean> => {
     if (!user) return false;
     try {
-      await user.reload();
-      setUser(auth.currentUser);
-      return auth.currentUser?.emailVerified ?? false;
+      if (typeof user.reload === 'function') {
+        await user.reload();
+      }
+      setUser(auth.currentUser || user);
+      return (auth.currentUser?.emailVerified ?? user.emailVerified) ?? false;
     } catch (err) {
-      console.error('Failed to reload user:', err);
-      return false;
+      console.warn('Failed to reload user:', err);
+      return user.emailVerified || false;
     }
   };
 
@@ -86,10 +158,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loading,
         error,
         isEmailVerified,
+        firebaseReady: firebaseConfigValid,
+        configErrors: firebaseConfigErrors,
         signOut,
         setError,
         sendUserVerificationEmail,
         reloadUser,
+        loginAsGuest,
       }}
     >
       {children}

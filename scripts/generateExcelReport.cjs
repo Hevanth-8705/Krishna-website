@@ -8,8 +8,12 @@ const path = require('path');
 const ExcelJS = require('exceljs');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
+const TEST_RESULTS_DIR = path.join(PROJECT_ROOT, 'test-results');
 const REPORTS_DIR = path.join(PROJECT_ROOT, 'reports');
-const INPUT_FILE = path.join(REPORTS_DIR, 'test-results.json');
+// Find test results JSON (fallback to reports if needed)
+const INPUT_FILE = fs.existsSync(path.join(TEST_RESULTS_DIR, 'test-results.json'))
+  ? path.join(TEST_RESULTS_DIR, 'test-results.json')
+  : path.join(REPORTS_DIR, 'test-results.json');
 const OUTPUT_FILE = path.join(REPORTS_DIR, 'Krishna-Test-Report.xlsx');
 
 // ============================================================
@@ -327,6 +331,9 @@ async function generateReport() {
     });
     row++;
   });
+
+  // Add sheet for passed test cases
+  addTestSheet(workbook, 'Passed Test Cases', results.filter(r => r.status === 'PASS'));
 
   // --------------------------------------------------------
   // 2. ALL TEST CASES

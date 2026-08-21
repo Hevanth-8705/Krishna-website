@@ -1,0 +1,7 @@
+Evidence Item,Target Endpoint / File,Status / Outcome,Details / Captured Payload
+Server Health Check,/health,HEALTHY,"{""status"":""ok"",""service"":""Krishna AI Neural Core"",""uptime"":1741.7176615,""timestamp"":""2026-08-19T05:04:10.274Z"",""environment"":""development""}"
+Load Benchmark Probe,/health,RPS: 3125,"Duration: 0.03s, Total: 100, Avg: 2.06ms, p95: 8ms, Error: 0.0%"
+Load Benchmark Probe,/api/auth/smtp-status,RPS: 3846.2,"Duration: 0.01s, Total: 50, Avg: 0.68ms, p95: 1ms, Error: 0.0%"
+Load Benchmark Probe,/api/learn/paths,RPS: 507.9,"Duration: 0.13s, Total: 64, Avg: 8.86ms, p95: 16ms, Error: 0.0%"
+Load Benchmark Probe,/api/agent/tools,RPS: 5000,"Duration: 0.02s, Total: 80, Avg: 1.29ms, p95: 2ms, Error: 0.0%"
+Load Benchmark Probe,/api/learn/search,RPS: 1111.1,"Duration: 0.04s, Total: 50, Avg: 2.8ms, p95: 5ms, Error: 0.0%"

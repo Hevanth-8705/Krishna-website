@@ -1,5 +1,74 @@
 {
   "paths": {},
-  "progress": {},
-  "lastAccessed": {}
+  "progress": {
+    "guest_default:qa-course-001:les-1": {
+      "userId": "guest_default",
+      "courseId": "qa-course-001",
+      "moduleId": "mod-1",
+      "lessonId": "les-1",
+      "completed": true,
+      "watchProgress": 100,
+      "practiceCompleted": true,
+      "updatedAt": 1787116170954
+    },
+    "guest_default:e2e-course-001:e2e-les-001": {
+      "userId": "guest_default",
+      "courseId": "e2e-course-001",
+      "moduleId": "",
+      "lessonId": "e2e-les-001",
+      "completed": true,
+      "watchProgress": 80,
+      "practiceCompleted": false,
+      "updatedAt": 1787116171086
+    },
+    "guest_default:db-test-1787115723869:les-test-1": {
+      "userId": "guest_default",
+      "courseId": "db-test-1787115723869",
+      "moduleId": "",
+      "lessonId": "les-test-1",
+      "completed": true,
+      "watchProgress": 95,
+      "practiceCompleted": false,
+      "updatedAt": 1787115723871
+    },
+    "guest_default:db-test-1787115851619:les-test-1": {
+      "userId": "guest_default",
+      "courseId": "db-test-1787115851619",
+      "moduleId": "",
+      "lessonId": "les-test-1",
+      "completed": true,
+      "watchProgress": 95,
+      "practiceCompleted": false,
+      "updatedAt": 1787115851622
+    },
+    "guest_default:db-test-1787116075544:les-test-1": {
+      "userId": "guest_default",
+      "courseId": "db-test-1787116075544",
+      "moduleId": "",
+      "lessonId": "les-test-1",
+      "completed": true,
+      "watchProgress": 95,
+      "practiceCompleted": false,
+      "updatedAt": 1787116075546
+    },
+    "guest_default:db-test-1787116171096:les-test-1": {
+      "userId": "guest_default",
+      "courseId": "db-test-1787116171096",
+      "moduleId": "",
+      "lessonId": "les-test-1",
+      "completed": true,
+      "watchProgress": 95,
+      "practiceCompleted": false,
+      "updatedAt": 1787116171099
+    }
+  },
+  "lastAccessed": {
+    "guest_default": {
+      "userId": "guest_default",
+      "courseId": "db-test-1787116171096",
+      "moduleId": "",
+      "lessonId": "les-test-1",
+      "updatedAt": 1787116171099
+    }
+  }
 }

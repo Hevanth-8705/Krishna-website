@@ -20,9 +20,13 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import {
   signInWithEmailAndPassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { getFirebaseAuthErrorMessage } from '../lib/authErrors';
 import { useAuth } from '../context/AuthContext';
 import { KrishnaFluteHero } from '../components/KrishnaFluteHero';
 import {
@@ -58,7 +62,7 @@ function GoogleIcon() {
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isEmailVerified, signOut } = useAuth();
+  const { user, isEmailVerified, signOut, loginAsGuest, firebaseReady, configErrors } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -109,6 +113,9 @@ export default function Login() {
 
     setSubmitting(true);
     try {
+      // Apply session persistence based on Remember Session checkbox
+      await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
+
       const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
       // Sync profile to Firestore
       await syncUserProfileToFirestore(userCredential.user, 'password');
@@ -119,17 +126,7 @@ export default function Login() {
       }, 1000);
     } catch (err: any) {
       console.error('Login error:', err);
-      let msg = err.message || 'Authentication failed.';
-      if (err.code === 'auth/operation-not-allowed') {
-        msg = 'Email/Password authentication is not enabled for this Firebase project. Please enable Email/Password in Firebase Console or sign in using Google below.';
-      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        msg = 'Incorrect email or password.';
-      } else if (err.code === 'auth/invalid-email') {
-        msg = 'Please enter a valid email address.';
-      } else if (err.code === 'auth/too-many-requests') {
-        msg = 'Access disabled due to many failed attempts. Try again later or reset password.';
-      }
-      setErrorMsg(msg);
+      setErrorMsg(getFirebaseAuthErrorMessage(err, 'Authentication failed.'));
     } finally {
       setSubmitting(false);
     }
@@ -251,6 +248,25 @@ export default function Login() {
           >
             {/* Top Cyan Glowing Stripe */}
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00E5FF] to-transparent" />
+
+            {/* Firebase Configuration Error Banner */}
+            {!firebaseReady && (
+              <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/40 rounded-xl text-amber-300 text-xs font-mono space-y-2">
+                <div className="flex items-start gap-2">
+                  <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-amber-400" />
+                  <div className="space-y-1">
+                    <p className="font-semibold text-amber-200 text-[11px] tracking-wide uppercase">Firebase Configuration Required</p>
+                    {configErrors.map((err, i) => (
+                      <p key={i} className="text-[10px] leading-relaxed text-amber-300/80">• {err}</p>
+                    ))}
+                    <p className="text-[10px] text-amber-400/70 pt-1">
+                      Set the correct values in your <span className="text-amber-200">.env</span> file from{' '}
+                      <span className="text-amber-200">Firebase Console → Project Settings → Your Apps</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Error / Success Alerts */}
             <AnimatePresence mode="wait">
@@ -408,6 +424,19 @@ export default function Login() {
               >
                 <ExternalLink size={11} />
                 <span>Having popup issues? Use Google Redirect Login</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  loginAsGuest();
+                  setSuccessMsg('Initialized Neural Operator Guest Session. Launching Core...');
+                  setTimeout(() => navigate(fromPath), 600);
+                }}
+                className="w-full py-2.5 bg-gradient-to-r from-cyan-950/40 to-blue-950/40 hover:from-cyan-900/60 hover:to-blue-900/60 border border-[#00E5FF]/30 hover:border-[#00E5FF]/70 rounded-xl text-xs text-[#00E5FF] font-mono flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_15px_rgba(0,229,255,0.15)] mt-3"
+              >
+                <Sparkles size={14} className="text-[#00E5FF] animate-pulse" />
+                <span className="font-semibold tracking-wide">Instant Operator Demo Mode (Bypass Auth)</span>
               </button>
             </div>
 

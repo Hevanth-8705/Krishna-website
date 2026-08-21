@@ -23,6 +23,7 @@
     "qa:test": "node scripts/runValidationTests.cjs",
     "qa:excel": "node scripts/generateExcelReport.cjs",
     "qa:html": "node scripts/generateHtmlReport.cjs",
+    "qa:suite": "node scripts/runCompleteQaSuite.cjs",
     "qa:ci": "npm run typecheck && npm run build && npm run qa:report",
     "qa:report": "node scripts/runValidationTests.cjs && node scripts/generateHtmlReport.cjs && node scripts/generateExcelReport.cjs"
   },

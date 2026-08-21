@@ -15,7 +15,7 @@ import KrishnaLearn from './pages/KrishnaLearn';
 import KrishnaGuardian from './pages/KrishnaGuardian';
 import AboutCreator from './pages/AboutCreator';
 import UlosUniversalLife from './pages/UlosUniversalLife';
-import NeuralCanvas from './pages/NeuralCanvas';
+
 import KrishnaVision from './pages/KrishnaVision';
 import KrishnaAgent from './pages/KrishnaAgent';
 import Login from './pages/Login';
@@ -56,7 +56,7 @@ function AppLayout() {
             <Route path="/guardian" element={<ProtectedRoute><KrishnaGuardian /></ProtectedRoute>} />
             <Route path="/creator" element={<AboutCreator />} />
             <Route path="/ulos" element={<ProtectedRoute><UlosUniversalLife /></ProtectedRoute>} />
-            <Route path="/canvas" element={<ProtectedRoute><NeuralCanvas /></ProtectedRoute>} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />

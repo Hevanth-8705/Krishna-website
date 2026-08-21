@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BrainCircuit, Mic, ShieldAlert, BookOpen, Hexagon, Sparkles, UserCheck, Eye, Zap } from 'lucide-react';
+import { LayoutDashboard, BrainCircuit, Mic, ShieldAlert, BookOpen, Hexagon, UserCheck, Eye, Zap } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'motion/react';
 import OSLogo from '../assets/images/krishna_web_os_logo_1780063756861.png';
@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { name: 'Krishna Core', path: '/core', icon: BrainCircuit },
   { name: 'Krishna Vision', path: '/vision', icon: Eye },
   { name: 'Krishna Agent', path: '/agent', icon: Zap },
-  { name: 'Neural Canvas', path: '/canvas', icon: Sparkles },
   { name: 'Voice Command', path: '/voice', icon: Mic },
   { name: 'Krishna Learn', path: '/learn', icon: BookOpen },
   { name: 'Guardian OS', path: '/guardian', icon: ShieldAlert },

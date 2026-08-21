@@ -1,0 +1,6 @@
+Metric Name,Endpoint / Target,Target Threshold,Actual Latency,Status
+Root HTML Document TTFB,/,250ms,4ms,OPTIMAL
+Health Endpoint Latency,/health,100ms,1ms,OPTIMAL
+SMTP Diagnostic Latency,/api/auth/smtp-status,1500ms,0ms,OPTIMAL
+Learn Paths Retrieval Latency,/api/learn/paths,300ms,2ms,OPTIMAL
+Agent Tools Listing Latency,/api/agent/tools,150ms,1ms,OPTIMAL

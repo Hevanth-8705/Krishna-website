@@ -38,7 +38,7 @@ function getGroqApiKey(): string {
 }
 
 function getGroqModel(): string {
-  return process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+  return process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 }
 
 function getGroqVisionModel(): string {
@@ -96,46 +96,59 @@ async function callGroqAPI(options: {
     throw new Error('GROQ_API_KEY is not configured on the server.');
   }
 
-  const model = getGroqModel();
-  const body: any = {
-    model,
-    messages: options.messages,
-    temperature: options.temperature ?? 0.7,
-    max_tokens: options.max_tokens ?? 2048,
-    stream: false
-  };
+  const primaryModel = getGroqModel();
+  const candidateModels = Array.from(new Set([primaryModel, 'openai/gpt-oss-120b', 'qwen/qwen3.6-27b', 'openai/gpt-oss-20b', 'groq/compound']));
 
-  if (options.jsonMode) {
-    body.response_format = { type: 'json_object' };
+  let lastError: any = null;
+
+  for (const model of candidateModels) {
+    const body: any = {
+      model,
+      messages: options.messages,
+      temperature: options.temperature ?? 0.7,
+      max_tokens: options.max_tokens ?? 2048,
+      stream: false
+    };
+
+    if (options.jsonMode) {
+      body.response_format = { type: 'json_object' };
+    }
+
+    try {
+      const response = await fetch(GROQ_API_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.warn(`Groq API Model ${model} returned ${response.status}:`, errorText);
+        lastError = new Error(`Groq API Error: ${response.status} ${response.statusText}`);
+        continue;
+      }
+
+      const data: any = await response.json();
+      const rawText = data.choices?.[0]?.message?.content || '';
+
+      let text = rawText;
+      let emotion = 'Professional';
+      const emotionMatch = text.match(/\[EMOTION:\s*(.+?)\]/i);
+      if (emotionMatch) {
+        emotion = emotionMatch[1].trim();
+        text = text.replace(/\[EMOTION:\s*(.+?)\]/i, '').trim();
+      }
+
+      return { text, emotion };
+    } catch (err) {
+      lastError = err;
+    }
   }
 
-  const response = await fetch(GROQ_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`Groq API Error (${response.status}):`, errorText);
-    throw new Error(`Groq API Error: ${response.status} ${response.statusText}`);
-  }
-
-  const data: any = await response.json();
-  const rawText = data.choices?.[0]?.message?.content || '';
-
-  let text = rawText;
-  let emotion = 'Professional';
-  const emotionMatch = text.match(/\[EMOTION:\s*(.+?)\]/i);
-  if (emotionMatch) {
-    emotion = emotionMatch[1].trim();
-    text = text.replace(/\[EMOTION:\s*(.+?)\]/i, '').trim();
-  }
-
-  return { text, emotion };
+  throw lastError || new Error('All Groq candidate models failed to return a response.');
 }
 
 async function streamGroqAPI(
@@ -148,25 +161,41 @@ async function streamGroqAPI(
     return;
   }
 
-  const model = getGroqModel();
-  const response = await fetch(GROQ_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model,
-      messages: options.messages,
-      temperature: options.temperature ?? 0.7,
-      stream: true
-    })
-  });
+  const primaryModel = getGroqModel();
+  const candidateModels = Array.from(new Set([primaryModel, 'openai/gpt-oss-120b', 'qwen/qwen3.6-27b', 'openai/gpt-oss-20b', 'groq/compound']));
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`Groq Streaming Error (${response.status}):`, errorText);
-    res.status(response.status).json({ error: `Groq Streaming Error: ${response.statusText}` });
+  let response: any = null;
+
+  for (const model of candidateModels) {
+    try {
+      const resp = await fetch(GROQ_API_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model,
+          messages: options.messages,
+          temperature: options.temperature ?? 0.7,
+          stream: true
+        })
+      });
+
+      if (resp.ok) {
+        response = resp;
+        break;
+      } else {
+        const errorText = await resp.text();
+        console.warn(`Groq Streaming Model ${model} returned ${resp.status}:`, errorText);
+      }
+    } catch (err) {
+      console.warn(`Groq Streaming fetch error with ${model}:`, err);
+    }
+  }
+
+  if (!response) {
+    res.status(500).json({ error: 'Groq Streaming Error: All candidate models failed.' });
     return;
   }
 
@@ -1510,8 +1539,16 @@ Respond strictly with a single JSON object matching this schema:
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
+  const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`KRISHNA NEURAL CORE running on http://localhost:${PORT} [AI Provider: GROQ]`);
+  });
+
+  server.on("error", (err: any) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(`[SERVER PORT CONFLICT] Port ${PORT} is already in use by another process. Please free port ${PORT} or configure PORT in .env.`);
+      process.exit(1);
+    }
+    console.error("[SERVER ERROR]", err);
   });
 }
 

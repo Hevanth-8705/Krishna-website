@@ -8,6 +8,10 @@ const path = require('path');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const TEST_RESULTS_DIR = path.join(PROJECT_ROOT, 'test-results');
 const REPORTS_DIR = path.join(PROJECT_ROOT, 'reports');
+// Load full test catalog to detect unexecuted tests
+const CATALOG_PATH = path.join(PROJECT_ROOT, 'tests', 'test-cases.json');
+const catalog = fs.existsSync(CATALOG_PATH) ? JSON.parse(fs.readFileSync(CATALOG_PATH, 'utf8')) : [];
+const catalogTotal = Array.isArray(catalog) ? catalog.length : 0;
 
 // Find test results JSON
 const INPUT_FILE = fs.existsSync(path.join(TEST_RESULTS_DIR, 'test-results.json'))
@@ -50,7 +54,10 @@ const meta = data.meta || {};
 const total = results.length;
 const passed = results.filter(r => r.status === 'PASS').length;
 const failed = results.filter(r => r.status === 'FAIL').length;
-const skipped = results.filter(r => r.status === 'SKIPPED').length;
+const skippedExecuted = results.filter(r => r.status === 'SKIPPED').length;
+// Compute missing tests from catalog
+const missingTests = catalogTotal - total;
+const skipped = skippedExecuted + (missingTests > 0 ? missingTests : 0);
 const passRate = total > 0 ? ((passed / total) * 100).toFixed(1) : '0.0';
 const totalDuration = results.reduce((acc, r) => acc + (r.duration || 0), 0);
 const durationStr = (totalDuration / 1000).toFixed(2) + 's';
@@ -121,6 +128,7 @@ lines.push(`| **Passed** | ${passed} |`);
 lines.push(`| **Failed** | ${failed} |`);
 lines.push(`| **Skipped** | ${skipped} |`);
 lines.push(`| **Pass Rate** | **${passRate}%** |`);
+// Note: Missing tests from catalog are reported as Skipped above.
 lines.push(`| **Total Duration** | ${durationStr} |`);
 lines.push('');
 

@@ -7,7 +7,6 @@ import {
   Search, 
   LayoutDashboard, 
   BrainCircuit, 
-  Sparkles, 
   Mic, 
   History, 
   Workflow, 
@@ -99,15 +98,6 @@ export function CommandPalette() {
       icon: BrainCircuit,
       route: '/core',
       color: 'text-[#00FF9D]',
-    },
-    {
-      id: 'nav-canvas',
-      category: 'NAVIGATION',
-      title: 'Neural Canvas Designer',
-      subtitle: 'Vibe check active creative graphics buffers, live drawing, and vector assets.',
-      icon: Sparkles,
-      route: '/canvas',
-      color: 'text-[#A78BFA]',
     },
     {
       id: 'nav-voice',

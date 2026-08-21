@@ -70,30 +70,47 @@ export function getSmtpTransporter() {
   const port = Number(process.env.SMTP_PORT) || 465;
   const secure = process.env.SMTP_SECURE !== 'false';
   const user = process.env.SMTP_USER || 'krishnab3032@gmail.com';
-  const pass = process.env.SMTP_PASSWORD || 'izqm oykm xxrj trgb';
+  const pass = (process.env.SMTP_PASSWORD || '').trim();
 
-  const transporter = nodemailer.createTransport({
+  const transportOptions: any = {
     host,
     port,
     secure, // true for 465, false for other ports
-    auth: {
-      user,
-      pass,
-    },
     connectionTimeout: 10000, // 10 seconds
     socketTimeout: 15000,     // 15 seconds
     tls: {
       rejectUnauthorized: true, // Production TLS verification
     },
-  });
+  };
 
+  if (user && pass) {
+    transportOptions.auth = {
+      user,
+      pass,
+    };
+  }
+
+  const transporter = nodemailer.createTransport(transportOptions);
   return { transporter, host, port, user };
 }
 
 // Verify SMTP Connection
 export async function verifySmtpConnection(): Promise<{ success: boolean; message: string; host: string; port: number }> {
+  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const port = Number(process.env.SMTP_PORT) || 465;
+  const pass = (process.env.SMTP_PASSWORD || '').trim();
+
+  if (!pass) {
+    return {
+      success: false,
+      message: 'SMTP credentials unconfigured (SMTP_PASSWORD empty in .env). Email service in local simulation mode.',
+      host,
+      port,
+    };
+  }
+
   try {
-    const { transporter, host, port } = getSmtpTransporter();
+    const { transporter } = getSmtpTransporter();
     await transporter.verify();
     return {
       success: true,
@@ -102,12 +119,12 @@ export async function verifySmtpConnection(): Promise<{ success: boolean; messag
       port,
     };
   } catch (error: any) {
-    console.error('[SMTP Diagnostic Error]:', error.message || error);
+    console.warn('[SMTP Diagnostic Warning]:', error.message || error);
     return {
       success: false,
       message: 'Failed to establish connection with SMTP server.',
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: Number(process.env.SMTP_PORT) || 465,
+      host,
+      port,
     };
   }
 }
@@ -202,6 +219,15 @@ If you did not request this reset, you can safely ignore this email.
 
 KRISHNA_OS Security Core
 `;
+
+  const pass = (process.env.SMTP_PASSWORD || '').trim();
+  if (!pass) {
+    console.log(`[SMTP Mailer (Local Dev Simulation)] Password reset link generated for ${sanitizeEmail(cleanEmail)}: ${resetUrl}`);
+    return { 
+      success: true, 
+      message: 'Password reset link generated. (Local mode: Link logged to server terminal).' 
+    };
+  }
 
   try {
     const { transporter } = getSmtpTransporter();

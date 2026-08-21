@@ -1,0 +1,11 @@
+Component / Property,Configured Value,Verification Status
+Application URL,http://127.0.0.1:3000,REACHABLE
+Node.js Runtime Version,v24.16.0,VERIFIED
+Operating System,Windows 11 / Windows,VERIFIED
+Host Machine / Device,DESKTOP-8S6KR5P,VERIFIED
+Default Browser Automation,Headless Chrome / Edge,AVAILABLE
+Primary AI Model Provider,Groq (qwen/qwen3.6-27b / llama),CONFIGURED
+Secondary Image Engine,OpenAI DALL-E 3,CONFIGURED
+SMTP Host & Port,smtp.gmail.com:465,VERIFIED
+Database Configuration,Local In-Memory / File JSON Store + Firebase,OPERATIONAL
+Android Mobile Project,android/ (Placeholder - No compiled APK),NOT APPLICABLE

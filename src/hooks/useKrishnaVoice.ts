@@ -99,11 +99,23 @@ export function useKrishnaVoice(navigate?: (path: string) => void) {
     }
   }, [store]);
 
-  // Speech Synthesis (TTS)
+  // Speech Synthesis (TTS) with Feedback Loop Prevention & Controlled Cooldown
+  const cooldownTimerRef = useRef<any>(null);
+  const lastProcessedCommandRef = useRef<{ text: string; time: number }>({ text: '', time: 0 });
+
   const speak = useCallback((text: string) => {
     if (!('speechSynthesis' in window)) return;
 
     window.speechSynthesis.cancel(); // Stop any ongoing speech first
+
+    // TTS Feedback Prevention: Pause active recognition & wake word while Krishna speaks
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+    if (wakeWordRecognitionRef.current) {
+      try { wakeWordRecognitionRef.current.stop(); } catch (e) {}
+    }
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
@@ -114,12 +126,26 @@ export function useKrishnaVoice(navigate?: (path: string) => void) {
     );
     if (naturalVoice) utterance.voice = naturalVoice;
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+    };
+
+    const handleSpeechEnd = () => {
+      setIsSpeaking(false);
+      // Controlled Cooldown: 500ms after speech ends before listening resumes
+      if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+      cooldownTimerRef.current = setTimeout(() => {
+        if (isWakeWordActive && wakeWordRecognitionRef.current) {
+          try { wakeWordRecognitionRef.current.start(); } catch (e) {}
+        }
+      }, 500);
+    };
+
+    utterance.onend = handleSpeechEnd;
+    utterance.onerror = handleSpeechEnd;
 
     window.speechSynthesis.speak(utterance);
-  }, []);
+  }, [isWakeWordActive]);
 
   const stopSpeaking = useCallback(() => {
     if ('speechSynthesis' in window) {
@@ -128,12 +154,24 @@ export function useKrishnaVoice(navigate?: (path: string) => void) {
     }
   }, []);
 
-  // Process command transcript through router
+  // Process command transcript through router (with Duplicate Command Prevention)
   const processTranscript = useCallback(async (textToProcess: string) => {
-    if (!textToProcess.trim()) return;
+    const trimmed = textToProcess.trim();
+    if (!trimmed) return;
+
+    // Duplicate Command Prevention: Ignore duplicate identical commands within 2 seconds
+    const now = Date.now();
+    if (
+      lastProcessedCommandRef.current.text === trimmed.toLowerCase() &&
+      now - lastProcessedCommandRef.current.time < 2000
+    ) {
+      console.log("[Voice] Duplicate command callback suppressed:", trimmed);
+      return;
+    }
+    lastProcessedCommandRef.current = { text: trimmed.toLowerCase(), time: now };
 
     setIsProcessing(true);
-    setTranscript(textToProcess);
+    setTranscript(trimmed);
 
     try {
       const result = await executeVoiceCommand(textToProcess, {

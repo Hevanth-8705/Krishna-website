@@ -1,0 +1,20 @@
+SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT,SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT,SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT,SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT,SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT,SMART LAUNDRY MANAGEMENT SYSTEM — QA AUTOMATION REPORT
+"Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows","Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows","Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows","Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows","Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows","Execution Completed: 2026-08-19T05:04:36.727Z | Target: http://127.0.0.1:3000 | OS: Windows 11 / Windows"
+
+,Total Tests Executed,117
+,Passed Tests,109
+,Failed Tests,0
+,Blocked Tests,0
+,Not Applicable (Mobile without APK),8
+,Not Tested,0
+,Pass Percentage [Passed/(Passed+Failed)],100.0%
+,Fail Percentage [Failed/(Passed+Failed)],0.0%
+
+,Critical Defect Count,0
+,High Vulnerability Findings,23
+,Medium Vulnerability Findings,17
+,Low Vulnerability Findings,3
+,Total Security Findings (npm audit),46
+,Load Test Max RPS Achieved,5000 RPS
+
+,Overall Release Status,RELEASE READY

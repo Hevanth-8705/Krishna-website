@@ -1,0 +1,6 @@
+Endpoint,Virtual Users,Duration,Total Requests,Successful Requests,Failed Requests,Throughput (RPS),Avg Response (ms),p50 (ms),p95 (ms),p99 (ms),Max Response (ms),Error Rate,CPU Usage,Memory (Heap)
+/health,10,0.03s,100,100,0,3125,2.06,1,8,8,8,0.0%,2.4% avg,16.5 MB
+/api/auth/smtp-status,5,0.01s,50,50,0,3846.2,0.68,1,1,1,1,0.0%,2.4% avg,17.7 MB
+/api/learn/paths,8,0.13s,64,64,0,507.9,8.86,9,16,21,21,0.0%,2.4% avg,13.0 MB
+/api/agent/tools,10,0.02s,80,80,0,5000,1.29,1,2,2,2,0.0%,2.4% avg,15.1 MB
+/api/learn/search,5,0.04s,50,50,0,1111.1,2.8,3,5,5,5,0.0%,2.4% avg,16.3 MB

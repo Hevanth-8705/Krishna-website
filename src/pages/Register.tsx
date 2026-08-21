@@ -25,6 +25,7 @@ import {
   sendEmailVerification
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { getFirebaseAuthErrorMessage } from '../lib/authErrors';
 import { useAuth } from '../context/AuthContext';
 import { KrishnaFluteHero } from '../components/KrishnaFluteHero';
 import {
@@ -59,7 +60,7 @@ function GoogleIcon() {
 
 export default function Register() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, firebaseReady, configErrors } = useAuth();
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -154,17 +155,7 @@ export default function Register() {
       }, 2000);
     } catch (err: any) {
       console.error('Registration error:', err);
-      let msg = err.message || 'Registration failed.';
-      if (err.code === 'auth/operation-not-allowed') {
-        msg = 'Email/Password authentication is not enabled for this Firebase project. Please enable Email/Password in Firebase Console or sign up using Google below.';
-      } else if (err.code === 'auth/email-already-in-use') {
-        msg = 'An account with this email already exists.';
-      } else if (err.code === 'auth/invalid-email') {
-        msg = 'Please enter a valid email address.';
-      } else if (err.code === 'auth/weak-password') {
-        msg = 'Please choose a stronger password.';
-      }
-      setErrorMsg(msg);
+      setErrorMsg(getFirebaseAuthErrorMessage(err, 'Registration failed.'));
     } finally {
       setSubmitting(false);
     }
@@ -230,6 +221,25 @@ export default function Register() {
         >
           {/* Top Cyan Glowing Line */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00E5FF] to-transparent" />
+
+          {/* Firebase Configuration Error Banner */}
+          {!firebaseReady && (
+            <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/40 rounded-xl text-amber-300 text-xs font-mono space-y-2">
+              <div className="flex items-start gap-2">
+                <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-amber-400" />
+                <div className="space-y-1">
+                  <p className="font-semibold text-amber-200 text-[11px] tracking-wide uppercase">Firebase Configuration Required</p>
+                  {configErrors.map((err, i) => (
+                    <p key={i} className="text-[10px] leading-relaxed text-amber-300/80">• {err}</p>
+                  ))}
+                  <p className="text-[10px] text-amber-400/70 pt-1">
+                    Set the correct values in your <span className="text-amber-200">.env</span> file from{' '}
+                    <span className="text-amber-200">Firebase Console → Project Settings → Your Apps</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Error / Success Alerts */}
           <AnimatePresence mode="wait">

@@ -45,7 +45,8 @@ if (!fs.existsSync(JSON_REPORT)) {
     check('Minimum 400+ Test Cases', total >= 400, `Actual Total: ${total} tests (Threshold >= 400)`);
     check('Zero Failed Tests', failed === 0, `Failed: ${failed}`);
     check('Zero Blocked Mandatory Tests', blocked === 0, `Blocked: ${blocked}`);
-    check('Pass Rate Threshold (100%)', total > 0 && failed === 0, `Pass Rate: ${((passed / total) * 100).toFixed(1)}%`);
+    const skipped = summary.skipped || 0;
+    check('Zero Skipped Mandatory Tests', skipped === 0, `Skipped: ${skipped}`);
   } catch (err) {
     check('JSON Report Parseable', false, `Parse error: ${err.message}`);
   }
@@ -65,6 +66,30 @@ if (!fs.existsSync(HTML_REPORT)) {
 } else {
   const stat = fs.statSync(HTML_REPORT);
   check('HTML Dashboard Generated', stat.size > 1000, `Size: ${stat.size} bytes (${(stat.size / 1024).toFixed(1)} KB)`);
+}
+
+// 4. Report Safety & Secret Leak Audit
+const secretPatterns = [
+  { name: 'Groq API Key', regex: /gsk_[a-zA-Z0-9]{20,}/ },
+  { name: 'OpenAI API Key', regex: /sk-[a-zA-Z0-9]{20,}/ },
+  { name: 'OpenRouter Key', regex: /sk-or-v1-[a-zA-Z0-9]{20,}/ },
+  { name: 'Google/Firebase Key', regex: /AIzaSy[a-zA-Z0-9_-]{30,}/ },
+  { name: 'Private Key', regex: /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----/ },
+];
+
+let leakFound = false;
+const filesToAudit = [JSON_REPORT, HTML_REPORT].filter(f => fs.existsSync(f));
+for (const file of filesToAudit) {
+  const content = fs.readFileSync(file, 'utf8');
+  for (const pattern of secretPatterns) {
+    if (pattern.regex.test(content)) {
+      leakFound = true;
+      check('Report Secret Safety Audit', false, `Leaked secret pattern (${pattern.name}) detected in ${path.basename(file)}`);
+    }
+  }
+}
+if (!leakFound) {
+  check('Report Secret Safety Audit', true, 'Zero serialized secrets detected in report artifacts');
 }
 
 console.log('-'.repeat(70));

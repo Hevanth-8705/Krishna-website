@@ -13,7 +13,7 @@ import VoiceAssistant from './pages/VoiceAssistant';
 import KrishnaLearn from './pages/KrishnaLearn';
 import KrishnaGuardian from './pages/KrishnaGuardian';
 import UlosUniversalLife from './pages/UlosUniversalLife';
-import NeuralCanvas from './pages/NeuralCanvas';
+
 import KrishnaVision from './pages/KrishnaVision';
 import KrishnaAgent from './pages/KrishnaAgent';
 import Login from './pages/Login';
@@ -52,7 +52,7 @@ function AppLayout() {
             <Route path="/learn" element={<ProtectedRoute><KrishnaLearn /></ProtectedRoute>} />
             <Route path="/guardian" element={<ProtectedRoute><KrishnaGuardian /></ProtectedRoute>} />
             <Route path="/ulos" element={<ProtectedRoute><UlosUniversalLife /></ProtectedRoute>} />
-            <Route path="/canvas" element={<ProtectedRoute><NeuralCanvas /></ProtectedRoute>} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
